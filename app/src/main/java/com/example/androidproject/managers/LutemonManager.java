@@ -1,0 +1,83 @@
+package com.example.androidproject.managers;
+
+import android.content.Context;
+
+import com.example.androidproject.battle.Battle;
+import com.example.androidproject.containers.BattleArea;
+import com.example.androidproject.containers.Container;
+import com.example.androidproject.containers.Home;
+import com.example.androidproject.containers.TrainingArea;
+import com.example.androidproject.model.Lutemon;
+import com.example.androidproject.model.PinkLutemon;
+import com.example.androidproject.model.WhiteLutemon;
+
+public class LutemonManager
+{
+    private static LutemonManager instance;
+    private Home home;
+    private TrainingArea trainingArea;
+    private BattleArea battleArea;
+    private Battle battle;
+    private Context context;
+    /*
+    -----------------------------------------------------------------------------------
+    private constructor (singleton):
+    -----------------------------------------------------------------------------------
+     */
+    private LutemonManager(Context context)
+    {
+        this.context = context;
+        this.home.getInstance();
+        this.trainingArea.getInstance();
+        this.battleArea.getInstance();
+        battle = new Battle();
+        //loadLutemons(); //JSON FILE!! //maybe loading should be done more than just once (do it in getInstance() ???)
+    }
+    public static LutemonManager getInstance(Context context)
+    {
+        if (instance == null)
+            instance = new LutemonManager(context.getApplicationContext());
+        return instance;
+    }
+    /*
+    -----------------------------------------------------------------------------------
+    methods:
+    -----------------------------------------------------------------------------------
+     */
+    public void createLutemon(String color)
+    {
+        Lutemon lutemon;
+        switch (color)
+        {
+            case "Pink":
+                lutemon = new PinkLutemon();
+                break;
+            case "White":
+                lutemon = new WhiteLutemon();
+            default:
+                throw new IllegalArgumentException("Invalid color: " + color);
+        }
+        home.addLutemon(lutemon);
+        //saveLutemons(); //JSON FILE!!
+    }
+    public void moveLutemon(int id, Container from, Container to)
+    {
+        Lutemon lutemon = from.getLutemon(id);
+        if (lutemon != null)
+        {
+            from.removeLutemon(id);
+            to.addLutemon(lutemon);
+        }
+    }
+
+    /*
+    -----------------------------------------------------------------------------------
+    getters:
+    -----------------------------------------------------------------------------------
+     */
+    public Home getHome() { return home; }
+    public TrainingArea getTrainingArea() { return trainingArea; }
+    public BattleArea getBattleArea() { return battleArea; }
+    public Battle getBattle() { return battle; }
+
+}
