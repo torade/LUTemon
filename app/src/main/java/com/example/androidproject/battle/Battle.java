@@ -45,7 +45,7 @@ public class Battle
                 attacker.win();
                 defender.lose();
             }
-            logStats(attacker, defender); //??
+//          logStats(attacker, defender); Not necessary to be twice?
 
             //swap roles
             Lutemon aux = attacker;
@@ -58,6 +58,6 @@ public class Battle
     private void logStats(Lutemon A, Lutemon B)
     {
         battleLog.add(A.getName() + " (" + A.getColor() + "): " + "\nHP: "+ A.getHealth() + "\n / " + A.getMaxHealth() + "P: " + A.getPower() + "\nDEF: " + A.getDefense() + "\n XP: " + A.getExperience());
-        battleLog.add(B.getName() + " (" + B.getColor() + "): " + "\nHP: "+ B.getHealth() + "\n / " + B.getMaxHealth() + "P: " + B.getPower() + "\nDEF: " + B.getDefense() + "\n XP: " + A.getExperience());
+        battleLog.add(B.getName() + " (" + B.getColor() + "): " + "\nHP: "+ B.getHealth() + "\n / " + B.getMaxHealth() + "P: " + B.getPower() + "\nDEF: " + B.getDefense() + "\n XP: " + B.getExperience());
     }
 }

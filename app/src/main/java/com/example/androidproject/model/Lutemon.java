@@ -41,17 +41,27 @@ public abstract class Lutemon // abstract class not meant to be instantiated
     //training (CHANGE VALUES AFTER TESTING)
     public void train()
     {
-        while (experience > 0)
+        int choice = getRandomNumber(1, 3); // random attribute gets trained
+        if (experience > 0)
         {
             experience--;
-            power +=5;
-            defense +=3;
-            maxHealth++;
+            if (choice == 1) {
+                power += getRandomNumber(3, 7);
+                System.out.println("Power increased by " + power);
+            }
+            else if (choice == 2) {
+                defense += getRandomNumber(2, 4);
+                System.out.println("Defense increased by " + defense);
+            }
+            else if (choice == 3) {
+                maxHealth += getRandomNumber(2, 4);
+                System.out.println("Max Health increased by " + maxHealth);
+            }
             trainingCount++;
         }
     }
-    public void win() { experience += 5; winCount++; battleCount++; }
-    public void lose() { battleCount++; }
+    public void win() { experience += getRandomNumber(1, 5); winCount++; battleCount++; }
+    public void lose() { battleCount++;}
     public void resetHealth() { health = maxHealth; }
     /*
     -----------------------------------------------------------------------------------
@@ -69,4 +79,12 @@ public abstract class Lutemon // abstract class not meant to be instantiated
     public int getTrainingCount() { return trainingCount; }
     public int getBattleCount() { return battleCount; }
     public int getWinCount() { return winCount; }
+    /*
+    -----------------------------------------------------------------------------------
+    RANDOM NUMBER BETWEEN MAX AND MIN:
+    -----------------------------------------------------------------------------------
+     */
+    public static int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
 }

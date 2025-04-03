@@ -2,9 +2,10 @@ package com.example.androidproject.containers;
 
 import com.example.androidproject.model.Lutemon;
 
-public class TrainingArea
+public class TrainingArea extends Container
 {
     private static TrainingArea instance;
+
     /*
     -----------------------------------------------------------------------------------
     private constructor (singleton):
