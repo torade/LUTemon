@@ -79,6 +79,7 @@ public abstract class Lutemon // abstract class not meant to be instantiated
     public int getTrainingCount() { return trainingCount; }
     public int getBattleCount() { return battleCount; }
     public int getWinCount() { return winCount; }
+
     /*
     -----------------------------------------------------------------------------------
     RANDOM NUMBER BETWEEN MAX AND MIN:

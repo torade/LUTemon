@@ -7,7 +7,10 @@ import com.example.androidproject.containers.BattleArea;
 import com.example.androidproject.containers.Container;
 import com.example.androidproject.containers.Home;
 import com.example.androidproject.containers.TrainingArea;
+import com.example.androidproject.model.BlackLutemon;
+import com.example.androidproject.model.GreenLutemon;
 import com.example.androidproject.model.Lutemon;
+import com.example.androidproject.model.OrangeLutemon;
 import com.example.androidproject.model.PinkLutemon;
 import com.example.androidproject.model.WhiteLutemon;
 
@@ -44,16 +47,26 @@ public class LutemonManager
     methods:
     -----------------------------------------------------------------------------------
      */
-    public void createLutemon(String color)
+    public void createLutemon(String color, String name)
     {
         Lutemon lutemon;
         switch (color)
         {
+            case "Green":
+                lutemon = new GreenLutemon(name);
+                break;
+            case "Orange":
+                lutemon = new OrangeLutemon(name);
+                break;
+            case "Black":
+                lutemon = new BlackLutemon(name);
+                break;
             case "Pink":
-                lutemon = new PinkLutemon();
+                lutemon = new PinkLutemon(name);
                 break;
             case "White":
-                lutemon = new WhiteLutemon();
+                lutemon = new WhiteLutemon(name);
+                break;
             default:
                 throw new IllegalArgumentException("Invalid color: " + color);
         }

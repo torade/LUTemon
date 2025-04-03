@@ -1,8 +1,8 @@
 package com.example.androidproject.model;
 
 public class PinkLutemon extends Lutemon {
-    public PinkLutemon()
+    public PinkLutemon(String name)
     {
-        super("Pinky", "Pink", 10, 0, 16);
+        super(name, "Pink", 10, 0, 16);
     }
 }

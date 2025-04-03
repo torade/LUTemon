@@ -1,9 +1,9 @@
 package com.example.androidproject.model;
 
 public class WhiteLutemon extends Lutemon{
-    public WhiteLutemon()
+    public WhiteLutemon(String name)
     {
-        super("Whitey", "White", 7, 2, 18);
+        super(name, "White", 7, 2, 18);
     }
 
 }
