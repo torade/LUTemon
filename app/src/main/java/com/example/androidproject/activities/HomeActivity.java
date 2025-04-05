@@ -26,11 +26,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.default_storage_activity);
+        setContentView(R.layout.activity_container);
 
-        // Set title of view (Necessary to differentiate between different views)
-        TextView textView = findViewById(R.id.storageTitle);
-        textView.setText("Home");
 
         // Set up recycler view
         recyclerView = findViewById(R.id.lutemonRecyclerView);

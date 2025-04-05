@@ -1,47 +1,52 @@
 package com.example.androidproject.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
+import androidx.viewpager2.widget.ViewPager2;
+import com.example.androidproject.adapter.ViewPagerAdapter;
 import com.example.androidproject.R;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
+    // Constants for tab titles
+    private static final String TAB_TITLE_TRAINING = "Training";
+    private static final String TAB_TITLE_HOME = "Home";
+    private static final String TAB_TITLE_BATTLE = "Battle";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.main_activity);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        setContentView(R.layout.activity_main);
 
-        // Set buttons to do something
-        Button createButton = findViewById(R.id.createButton);
-        Button homeButton = findViewById(R.id.homeButton);
-        Button trainingButton = findViewById(R.id.trainingButton);
-        Button battleButton = findViewById(R.id.battleButton);
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
 
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        viewPager.setAdapter(adapter);
 
-        createButton.setOnClickListener(v -> {
-            // Create new lutemon
-            Intent intent = new Intent(MainActivity.this, CreateLutemonActivity.class);
-            startActivity(intent);
-        });
-        homeButton.setOnClickListener(v -> {
-            // Go to home view
-            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-            startActivity(intent);
-        });
+        new TabLayoutMediator(tabLayout, viewPager, this::setTabTitle).attach();
+
+    }
+    /**
+     * Sets the title for each tab based on its position.
+     *
+     * @param tab The tab to set the title for.
+     * @param position The position of the tab.
+     */
+    private void setTabTitle(TabLayout.Tab tab, int position) {
+        switch (position) {
+            case 0:
+                tab.setText(TAB_TITLE_HOME);
+                break;
+            case 1:
+                tab.setText(TAB_TITLE_TRAINING);
+                break;
+            case 2:
+                tab.setText(TAB_TITLE_BATTLE);
+                break;
+        }
     }
 }
