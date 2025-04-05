@@ -33,12 +33,12 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lutemon_item, parent, false);
-        return new LutemonListActivity.LutemonViewHolder(view, listener);
+        return new LutemonItemActivity.LutemonViewHolder(view, listener);
     }
 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Lutemon lutemon = lutemons.get(position); // Get the lutemon at the current position
-        LutemonListActivity.LutemonViewHolder lutemonHolder = (LutemonListActivity.LutemonViewHolder) holder;
+        LutemonItemActivity.LutemonViewHolder lutemonHolder = (LutemonItemActivity.LutemonViewHolder) holder;
         try {
             try {
                 String color = lutemon.getColor(); // Get the color of the lutemon to set the image accordingly

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidproject.R;
 
-public class LutemonListActivity {
+public class LutemonItemActivity {
 
     public static class LutemonViewHolder extends RecyclerView.ViewHolder {
         private ImageView lutemonImage;
@@ -37,6 +37,7 @@ public class LutemonListActivity {
                     }
                 }
             });
+
         }
 
 
