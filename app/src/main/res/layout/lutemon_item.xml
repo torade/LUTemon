@@ -22,8 +22,8 @@
                 android:id="@+id/lutemonImage"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/lutemon_placeholder_sprite"
-                android:contentDescription="Lutemon image"/>
+                android:contentDescription="Lutemon image"
+                android:src="@drawable/lutemon_placeholder_sprite" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -71,7 +71,7 @@
             android:layout_marginTop="8dp">
 
             <Button
-                android:id="@+id/moveButton"
+                android:id="@+id/createLutemonButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

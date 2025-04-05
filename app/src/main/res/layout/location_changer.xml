@@ -57,7 +57,7 @@
             android:layout_marginEnd="8dp"/>
 
         <Button
-            android:id="@+id/moveButton"
+            android:id="@+id/createLutemonButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -25,7 +25,7 @@ public class LutemonItemActivity {
             nameText = lutView.findViewById(R.id.nameText);
             colorText = lutView.findViewById(R.id.colorText);
             statsText = lutView.findViewById(R.id.statsText);
-            moveButton = lutView.findViewById(R.id.moveButton);
+            moveButton = lutView.findViewById(R.id.createLutemonButton);
             actionButton = lutView.findViewById(R.id.actionButton);
 
             itemView.setOnClickListener(new View.OnClickListener() {
