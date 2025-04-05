@@ -41,6 +41,7 @@ public class LutemonManager
     {
         if (instance == null)
             instance = new LutemonManager(context.getApplicationContext());
+            instance.initializeContainers();
         return instance;
     }
 
