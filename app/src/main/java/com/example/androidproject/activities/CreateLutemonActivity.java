@@ -8,6 +8,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.androidproject.R;
 import com.example.androidproject.containers.Home;
+import com.example.androidproject.managers.LutemonManager;
 import com.example.androidproject.model.*;
 
 public class CreateLutemonActivity extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class CreateLutemonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lutemon_creator);
+        setContentView(R.layout.activity_create_lutemon);
 
         nameInput = findViewById(R.id.nameInput);
         typeSpinner = findViewById(R.id.typeSpinner);
@@ -58,7 +59,11 @@ public class CreateLutemonActivity extends AppCompatActivity {
             }
 
             if (lutemon != null) {
-                Home.getInstance().addLutemon(lutemon);
+                LutemonManager manager = LutemonManager.getInstance(this); // Initialize manager
+                if (manager.getHome() == null) {
+                    manager.initializeContainers(); // THIS IS WHY IT'S WORKING. Home needs to be initialized.
+                }
+                manager.getHome().addLutemon(lutemon); // Add lutemon to Home container
                 finish(); // Go back to Home fragment
             }
         });

@@ -1,5 +1,6 @@
 package com.example.androidproject.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public interface OnItemClickListener { // Interface for handling item clicks
         void onItemClick(int position);
     }
-    private final List<Lutemon> lutemons; // List of lutemons to display
+    private List<Lutemon> lutemons; // List of lutemons to display
     private final Context context;
     private final OnItemClickListener listener;
 
@@ -34,6 +35,12 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lutemon_item, parent, false);
         return new LutemonItemActivity.LutemonViewHolder(view, listener);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateLutemons(List<Lutemon> newLutemons) {
+        this.lutemons = newLutemons;
+        notifyDataSetChanged();
     }
 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {

@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
                         case 2:
                             tab.setText("Battle");
                             break;
+//                      case 3:
+//                           tab.setText("Statistics"); LET'S NOT FORGET ABOUT STATS
+//                           break;
                     }
                 }
         ).attach();

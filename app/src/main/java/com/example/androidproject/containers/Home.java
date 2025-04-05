@@ -10,7 +10,7 @@ public class Home extends Container
     private constructor (singleton):
     -----------------------------------------------------------------------------------
      */
-    private Home() {}
+    public Home() {}
 
     public static Home getInstance()
     {

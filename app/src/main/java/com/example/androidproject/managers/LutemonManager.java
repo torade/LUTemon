@@ -1,6 +1,7 @@
 package com.example.androidproject.managers;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.androidproject.battle.Battle;
 import com.example.androidproject.containers.BattleArea;
@@ -41,6 +42,13 @@ public class LutemonManager
         if (instance == null)
             instance = new LutemonManager(context.getApplicationContext());
         return instance;
+    }
+
+    public void initializeContainers() {
+        if (home == null) {
+            home = new Home();
+            Log.d("LutemonManager", "Created new Home container");
+        }
     }
     /*
     -----------------------------------------------------------------------------------
