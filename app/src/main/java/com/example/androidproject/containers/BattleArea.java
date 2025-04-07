@@ -1,6 +1,6 @@
 package com.example.androidproject.containers;
 
-public class BattleArea
+public class BattleArea extends  Container
 {
     private static BattleArea instance;
     /*
@@ -8,7 +8,7 @@ public class BattleArea
     private constructor (singleton):
     -----------------------------------------------------------------------------------
      */
-    private BattleArea() {}
+    public BattleArea() {}
     public static BattleArea getInstance()
     {
         if (instance == null)

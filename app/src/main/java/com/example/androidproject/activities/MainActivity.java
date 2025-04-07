@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Create and add lutemons to Home -- remove later on when create a lutemon button works
-        Lutemon green = new GreenLutemon("Greeny");
-        Lutemon white = new WhiteLutemon("Snowy");
-        Home.getInstance().addLutemon(green);
-        Home.getInstance().addLutemon(white);
+//        // Create and add lutemons to Home -- remove later on when create a lutemon button works
+//        Lutemon green = new GreenLutemon("Greeny");
+//        Lutemon white = new WhiteLutemon("Snowy");
+//        Home.getInstance().addLutemon(green);
+//        Home.getInstance().addLutemon(white);
 
         // Set up ViewPager and TabLayout
         ViewPager2 viewPager = findViewById(R.id.viewPager);

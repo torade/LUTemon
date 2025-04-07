@@ -38,27 +38,31 @@ public abstract class Lutemon // abstract class not meant to be instantiated
     }
     public boolean isAlive() { return health > 0; }
 
-    //training (CHANGE VALUES AFTER TESTING)
-    public void train()
+    public String train()
     {
         int choice = getRandomNumber(1, 3); // random attribute gets trained
+        int increasedBy = 0;
         if (experience > 0)
         {
-            experience--;
+            this.experience--;
             if (choice == 1) {
-                power += getRandomNumber(3, 7);
-                System.out.println("Power increased by " + power);
+                increasedBy = getRandomNumber(3, 7);
+                this.power += increasedBy;
+                return "Power increasing by " + increasedBy + "...";
             }
             else if (choice == 2) {
-                defense += getRandomNumber(2, 4);
-                System.out.println("Defense increased by " + defense);
+                increasedBy = getRandomNumber(2, 4);
+                this.defense += increasedBy;
+                return "Defense increasing by " + increasedBy + "...";
             }
             else if (choice == 3) {
-                maxHealth += getRandomNumber(2, 4);
-                System.out.println("Max Health increased by " + maxHealth);
+                increasedBy = getRandomNumber(2, 4);
+                this.maxHealth += increasedBy;
+                return "Max Health increasing by " + increasedBy + "...";
             }
-            trainingCount++;
+            this.trainingCount++;
         }
+        return "No experience to train.";
     }
     public void win() { experience += getRandomNumber(1, 5); winCount++; battleCount++; }
     public void lose() { battleCount++;}
@@ -87,5 +91,9 @@ public abstract class Lutemon // abstract class not meant to be instantiated
      */
     public static int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 }

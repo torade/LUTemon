@@ -63,7 +63,7 @@ public class HomeAreaFragment extends Fragment {
             // Handle item click if needed
         };
 
-        LutemonAdapter adapter = new LutemonAdapter(lutemons, context, listener);
+        LutemonAdapter adapter = new LutemonAdapter(lutemons, context, listener, "Home");
         recyclerView.setAdapter(adapter);
 
         // Handle "Create LUTemon" button click
@@ -73,6 +73,8 @@ public class HomeAreaFragment extends Fragment {
             startActivity(intent);
         });
     }
+
+
 
     private void updateLutemons() {
         List<Lutemon> lutemons;
@@ -88,7 +90,7 @@ public class HomeAreaFragment extends Fragment {
             return;
         }
         if (recyclerView.getAdapter() == null) {
-            recyclerView.setAdapter(new LutemonAdapter(lutemons, getContext(), position -> {}));
+            recyclerView.setAdapter(new LutemonAdapter(lutemons, getContext(), position -> {}, "Home"));
         } else {
             ((LutemonAdapter) recyclerView.getAdapter()).updateLutemons(lutemons);
             recyclerView.getAdapter().notifyDataSetChanged();

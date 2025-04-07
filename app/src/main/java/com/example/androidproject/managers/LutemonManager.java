@@ -37,11 +37,12 @@ public class LutemonManager
         battle = new Battle();
         //loadLutemons(); //JSON FILE!! //maybe loading should be done more than just once (do it in getInstance() ???)
     }
-    public static LutemonManager getInstance(Context context)
-    {
-        if (instance == null)
+    public static LutemonManager getInstance(Context context) {
+        if (instance == null) {
             instance = new LutemonManager(context.getApplicationContext());
             instance.initializeContainers();
+            return instance;
+        }
         return instance;
     }
 
@@ -49,6 +50,14 @@ public class LutemonManager
         if (home == null) {
             home = new Home();
             Log.d("LutemonManager", "Created new Home container");
+        }
+        if (trainingArea == null) {
+            trainingArea = new TrainingArea();
+            Log.d("LutemonManager", "Created new TrainingArea container");
+        }
+        if (battleArea == null) {
+            battleArea = new BattleArea();
+            Log.d("LutemonManager", "Created new BattleArea container");
         }
     }
     /*

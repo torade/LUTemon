@@ -117,6 +117,7 @@ public class CreateLutemonActivity extends AppCompatActivity {
                     manager.initializeContainers(); // THIS IS WHY IT'S WORKING. Home needs to be initialized.
                 }
                 manager.getHome().addLutemon(lutemon); // Add lutemon to Home container
+                lutemon.setExperience(10);               // !! FOR TESTING PURPOSES
                 finish(); // Go back to Home fragment
             }
         });
