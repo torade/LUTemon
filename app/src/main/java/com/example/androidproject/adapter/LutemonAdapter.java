@@ -3,6 +3,8 @@ package com.example.androidproject.adapter;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +15,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidproject.R;
+import com.example.androidproject.activities.FightActivity;
+import com.example.androidproject.activities.LutemonItemActivity;
 import com.example.androidproject.containers.Container;
 import com.example.androidproject.managers.LutemonManager;
 import com.example.androidproject.model.Lutemon;
@@ -28,25 +31,28 @@ import java.util.List;
 
 public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public interface OnItemClickListener { // Interface for handling item clicks
+    public interface OnItemClickListener {
         void onItemClick(int position);
-
     }
-    private List<Lutemon> lutemons; // List of lutemons to display
+
+    private List<Lutemon> lutemons;
     private final Context context;
     private final OnItemClickListener listener;
     private final String currentContainer;
+
+    private Lutemon firstSelectedLutemon = null;
+    private Lutemon secondSelectedLutemon = null;
     private String trainStatUpdated = "";
 
-    public LutemonAdapter(List<Lutemon> lutemons, Context context, OnItemClickListener listener, String currentContainer){
+    public LutemonAdapter(List<Lutemon> lutemons, Context context, OnItemClickListener listener, String currentContainer) {
         this.lutemons = lutemons;
         this.context = context;
         this.listener = listener;
         this.currentContainer = currentContainer;
-
     }
 
     @NonNull
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lutemon_item, parent, false);
         return new LutemonItemActivity.LutemonViewHolder(view, listener);
@@ -58,66 +64,95 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyDataSetChanged();
     }
 
+    @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Lutemon lutemon = lutemons.get(position); // Get the lutemon at the current position
+        Lutemon lutemon = lutemons.get(position);
         LutemonItemActivity.LutemonViewHolder lutemonHolder = (LutemonItemActivity.LutemonViewHolder) holder;
+
         try {
-            try {
-                String color = lutemon.getColor(); // Get the color of the lutemon to set the image accordingly
-                switch (color) {
-                    case "Pink":
-                        lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_pink);
-                        break;
-                    case "White":
-                        lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_white);
-                        break;
-                    case "Green":
-                        lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_green);
-                        break;
-                    case "Orange":
-                        lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_orange);
-                        break;
-                    case "Black":
-                        lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_black);
-                        break;
-                }
-            } catch (Exception e) {
-                lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_placeholder_sprite); // Set a default image if an error occurs
-                Log.e("LutemonAdapter", "Error setting lutemon image: " + e.getMessage());
+            // Set Lutemon image based on color
+            switch (lutemon.getColor()) {
+                case "Pink":
+                    lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_pink);
+                    break;
+                case "White":
+                    lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_white);
+                    break;
+                case "Green":
+                    lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_green);
+                    break;
+                case "Orange":
+                    lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_orange);
+                    break;
+                case "Black":
+                    lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_black);
+                    break;
+                default:
+                    lutemonHolder.getLutemonImageView().setImageResource(R.drawable.lutemon_placeholder_sprite);
+                    break;
             }
 
+            // Populate text fields
             lutemonHolder.getNameTextView().setText(lutemon.getName());
             lutemonHolder.getColorTextView().setText(lutemon.getColor());
-            String stats = "ATK: " + lutemon.getPower() + " DEF: " + lutemon.getDefense() + " HP: " + lutemon.getHealth() + "/" + lutemon.getMaxHealth() + " XP: " + lutemon.getExperience(); // Format the stats
+
+            String stats = "ATK: " + lutemon.getPower() +
+                    "    DEF: " + lutemon.getDefense() +
+                    "    HP: " + lutemon.getHealth() + "/" + lutemon.getMaxHealth() +
+                    "    XP: " + lutemon.getExperience();
             lutemonHolder.getStatsTextView().setText(stats);
 
-            lutemonHolder.getMoveButton().setOnClickListener(v ->  {
-                showMoveDialog(context, lutemon, currentContainer);
-            });
+            // Move button
+            lutemonHolder.getMoveButton().setOnClickListener(v -> showMoveDialog(context, lutemon, currentContainer));
 
             Button actionButton = lutemonHolder.getActionButton();
-            if (currentContainer.equals("Training Area")) {
-                actionButton.setText("Train");
-                actionButton.setVisibility(View.VISIBLE);
-                actionButton.setOnClickListener(v -> {
-                    if (lutemon.getExperience() > 0) {
-                        trainStatUpdated = lutemon.train();
-                        showTrainingDialog(context, lutemon);
-                        notifyItemChanged(position);
-                    } else {
-                        Toast.makeText(context, lutemon.getName() + " has no experience to train!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else if (currentContainer.equals("Battle Area")) {
-                    actionButton.setText("Select for Battle");
+
+            // Behavior depends on current container
+            switch (currentContainer) {
+                case "Training Area":
+                    actionButton.setText("Train");
                     actionButton.setVisibility(View.VISIBLE);
                     actionButton.setOnClickListener(v -> {
-                        Toast.makeText(context, lutemon.getName() + " selected for battle!", Toast.LENGTH_SHORT).show();
-                        // BATTLE LOGIC ALSO HERE
+                        if (lutemon.getExperience() > 0) {
+                            trainStatUpdated = lutemon.train();
+                            showTrainingDialog(context, lutemon);
+                            notifyItemChanged(position);
+                        } else {
+                            Toast.makeText(context, lutemon.getName() + " has no experience to train!", Toast.LENGTH_SHORT).show();
+                        }
                     });
-                } else {
+                    break;
+
+                case "Battle Area":
+                    actionButton.setText("Select for Battle");
+                    actionButton.setVisibility(View.VISIBLE);
+                    actionButton.setEnabled(firstSelectedLutemon != lutemon && secondSelectedLutemon != lutemon);
+
+                    actionButton.setOnClickListener(v -> {
+                        if (firstSelectedLutemon == null) {
+                            firstSelectedLutemon = lutemon;
+                            Toast.makeText(context, lutemon.getName() + " selected as first fighter!", Toast.LENGTH_SHORT).show();
+                        } else if (secondSelectedLutemon == null && lutemon != firstSelectedLutemon) {
+                            secondSelectedLutemon = lutemon;
+                            Toast.makeText(context, lutemon.getName() + " selected as second fighter!", Toast.LENGTH_SHORT).show();
+
+                            // Start fight activity
+                            Intent intent = new Intent(context, FightActivity.class);
+                            intent.putExtra("firstLutemon", firstSelectedLutemon.getId());
+                            intent.putExtra("secondLutemon", secondSelectedLutemon.getId());
+                            context.startActivity(intent);
+
+                            // Reset for next fight
+                            firstSelectedLutemon = null;
+                            secondSelectedLutemon = null;
+                        }
+                        notifyDataSetChanged();
+                    });
+                    break;
+
+                default:
                     actionButton.setVisibility(View.GONE);
-                }
+            }
 
         } catch (Exception e) {
             Log.e("LutemonAdapter", "Error binding lutemon data: " + e.getMessage());
@@ -125,7 +160,6 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void showTrainingDialog(Context context, Lutemon lutemon) {
-        // Make training shaky. Used some inspiration from AI & the internet for this.
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialogue_training_animation, null);
         builder.setView(dialogView);
@@ -135,7 +169,7 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView statsText = dialogView.findViewById(R.id.trainingStatsText);
         View energyGlow = dialogView.findViewById(R.id.energyGlowView);
 
-        // Set Lutemon image based on color
+        // Set image based on color
         switch (lutemon.getColor()) {
             case "White":
                 lutemonImage.setImageResource(R.drawable.lutemon_white);
@@ -156,32 +190,24 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 lutemonImage.setImageResource(R.drawable.lutemon_placeholder_sprite);
         }
 
-        // Show the dialog
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // Start shaking animation
-        Animation shakeAnimation = AnimationUtils.loadAnimation(context, R.anim.shake_animation);
-        lutemonImage.startAnimation(shakeAnimation);
-
+        // Animate image and glow
+        lutemonImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_animation));
         if (energyGlow != null) {
-            Animation glowAnimation = AnimationUtils.loadAnimation(context, R.anim.glow_animation);
-            energyGlow.startAnimation(glowAnimation);
+            energyGlow.startAnimation(AnimationUtils.loadAnimation(context, R.anim.glow_animation));
         }
 
-        // Update stats text with training info
         statsText.setText(trainStatUpdated);
 
-        // Auto-disappear after training completes (3 seconds)
+        // Auto-close dialog after delay
         new Handler().postDelayed(() -> {
             if (dialog.isShowing()) {
                 dialog.dismiss();
-                // Show training results
-                Toast.makeText(context,
-                        lutemon.getName() + " completed training!",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, lutemon.getName() + " completed training!", Toast.LENGTH_SHORT).show();
             }
-        }, 3000); // 3 seconds
+        }, 3000);
     }
 
     private void showMoveDialog(Context context, Lutemon lutemon, String currentContainer) {
@@ -192,7 +218,7 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         destinations.add("Home");
         destinations.add("Training Area");
         destinations.add("Battle Area");
-        destinations.remove(currentContainer); // Cant move to the same container
+        destinations.remove(currentContainer); // Remove current container
 
         String[] options = destinations.toArray(new String[0]);
 
@@ -208,31 +234,8 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void moveLutemon(Context context, Lutemon lutemon, String fromContainerName, String toContainerName) {
         LutemonManager manager = LutemonManager.getInstance(context);
 
-        Container fromContainer = null;
-        switch (fromContainerName) {
-            case "Home":
-                fromContainer = manager.getHome();
-                break;
-            case "Training Area":
-                fromContainer = manager.getTrainingArea();
-                break;
-            case "Battle Area":
-                fromContainer = manager.getBattleArea();
-                break;
-        }
-
-        Container toContainer = null;
-        switch (toContainerName) {
-            case "Home":
-                toContainer = manager.getHome();
-                break;
-            case "Training Area":
-                toContainer = manager.getTrainingArea();
-                break;
-            case "Battle Area":
-                toContainer = manager.getBattleArea();
-                break;
-        }
+        Container fromContainer = getContainerByName(manager, fromContainerName);
+        Container toContainer = getContainerByName(manager, toContainerName);
 
         if (fromContainer != null && toContainer != null) {
             manager.moveLutemon(lutemon.getId(), fromContainer, toContainer);
@@ -241,12 +244,22 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             lutemons.remove(lutemon);
             notifyDataSetChanged();
         }
-
-
     }
 
+    private Container getContainerByName(LutemonManager manager, String name) {
+        switch (name) {
+            case "Home":
+                return manager.getHome();
+            case "Training Area":
+                return manager.getTrainingArea();
+            case "Battle Area":
+                return manager.getBattleArea();
+            default:
+                return null;
+        }
+    }
 
-
+    @Override
     public int getItemCount() {
         return lutemons != null ? lutemons.size() : 0;
     }

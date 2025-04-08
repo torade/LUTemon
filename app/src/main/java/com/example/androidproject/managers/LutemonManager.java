@@ -47,18 +47,14 @@ public class LutemonManager
     }
 
     public void initializeContainers() {
-        if (home == null) {
-            home = new Home();
-            Log.d("LutemonManager", "Created new Home container");
-        }
-        if (trainingArea == null) {
-            trainingArea = new TrainingArea();
+            home = Home.getInstance();
+            Log.d("LutemonManager", "Setting Home container");
+
+            trainingArea = TrainingArea.getInstance();
             Log.d("LutemonManager", "Created new TrainingArea container");
-        }
-        if (battleArea == null) {
-            battleArea = new BattleArea();
+
+            battleArea = BattleArea.getInstance();
             Log.d("LutemonManager", "Created new BattleArea container");
-        }
     }
     /*
     -----------------------------------------------------------------------------------

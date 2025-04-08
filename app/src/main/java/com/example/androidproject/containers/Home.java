@@ -10,7 +10,7 @@ public class Home extends Container
     private constructor (singleton):
     -----------------------------------------------------------------------------------
      */
-    public Home() {}
+    private Home() {}
 
     public static Home getInstance()
     {
@@ -20,7 +20,7 @@ public class Home extends Container
     }
     /*
     -----------------------------------------------------------------------------------
-    methods:
+    specific methods:
     -----------------------------------------------------------------------------------
      */
     public void healLutemon(Lutemon lutemon) { lutemon.resetHealth(); } // heal when returning home, might not be used

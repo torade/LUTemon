@@ -8,7 +8,7 @@ public class BattleArea extends  Container
     private constructor (singleton):
     -----------------------------------------------------------------------------------
      */
-    public BattleArea() {}
+    private BattleArea() {}
     public static BattleArea getInstance()
     {
         if (instance == null)

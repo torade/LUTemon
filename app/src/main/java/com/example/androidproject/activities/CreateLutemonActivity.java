@@ -76,9 +76,9 @@ public class CreateLutemonActivity extends AppCompatActivity {
             }
 
             LutemonManager manager = LutemonManager.getInstance(this);
-            if (manager.getHome() == null) {
-                manager.initializeContainers();
-            }
+//            if (manager.getHome() == null) {
+//                manager.initializeContainers();
+//            }
 
             // Check if name already exists
             List<Lutemon> existingLutemons = manager.getHome().getAllLutemons();
@@ -113,9 +113,9 @@ public class CreateLutemonActivity extends AppCompatActivity {
             }
 
             if (lutemon != null) {
-                if (manager.getHome() == null) {
-                    manager.initializeContainers(); // THIS IS WHY IT'S WORKING. Home needs to be initialized.
-                }
+//                if (manager.getHome() == null) {
+//                    manager.initializeContainers(); // THIS IS WHY IT'S WORKING. Home needs to be initialized.
+//                }
                 manager.getHome().addLutemon(lutemon); // Add lutemon to Home container
                 lutemon.setExperience(10);               // !! FOR TESTING PURPOSES
                 finish(); // Go back to Home fragment

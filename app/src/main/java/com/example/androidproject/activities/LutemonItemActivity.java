@@ -1,4 +1,4 @@
-package com.example.androidproject.adapter;
+package com.example.androidproject.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidproject.R;
+import com.example.androidproject.adapter.LutemonAdapter;
 import com.example.androidproject.containers.Container;
 import com.example.androidproject.managers.LutemonManager;
 import com.example.androidproject.model.Lutemon;

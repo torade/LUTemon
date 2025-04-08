@@ -22,7 +22,7 @@ public class Battle
     public List<String> fight(Lutemon A, Lutemon B)
     {
         battleLog.clear();
-        logStats(A, B); //??
+        battleLog.add("Battle begins: " + A.getName() + " vs " + B.getName());
 
         Lutemon attacker = A;
         Lutemon defender = B;
@@ -31,13 +31,15 @@ public class Battle
         {
             int attackPower = attacker.getPower();
             battleLog.add(attacker.getName() + " attacks " + defender.getName() + " with power " + attackPower);
-            logStats(attacker, defender); //??
+
+
             int beforeHealth = defender.getHealth();
             defender.defend(attackPower);
             int afterHealth = defender.getHealth();
             int damage = beforeHealth - afterHealth;
+
             battleLog.add(defender.getName() + " takes " + damage + " damage");
-            logStats(attacker, defender); //??
+
             if (!defender.isAlive()) //when this condition is met, the loop ends (no break necessary)
             {
                 battleLog.add(defender.getName() + " has been defeated");
@@ -45,12 +47,12 @@ public class Battle
                 attacker.win();
                 defender.lose();
             }
-//          logStats(attacker, defender); Not necessary to be twice?
-
-            //swap roles
-            Lutemon aux = attacker;
-            attacker = defender;
-            defender = aux;
+            else {
+                //swap roles
+                Lutemon aux = attacker;
+                attacker = defender;
+                defender = aux;
+            }
         }
         return battleLog;
     }

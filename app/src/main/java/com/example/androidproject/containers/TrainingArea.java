@@ -11,7 +11,7 @@ public class TrainingArea extends Container
     private constructor (singleton):
     -----------------------------------------------------------------------------------
      */
-    public TrainingArea() {}
+    private TrainingArea() {}
     public static TrainingArea getInstance()
     {
         if (instance == null)
@@ -23,6 +23,6 @@ public class TrainingArea extends Container
     methods:
     -----------------------------------------------------------------------------------
      */
-//    public void trainLutemon(Lutemon lutemon) { lutemon.train(); }
+    public void trainLutemon(Lutemon lutemon) { lutemon.train(); }
 
 }

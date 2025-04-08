@@ -58,9 +58,9 @@
                     android:id="@+id/statsText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ATK: 5 DEF: 4 HP: 20/20 XP: 0"
-                    android:textSize="12sp"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="4dp"
+                    android:text="POW: 5    DEF: 4    HP: 20/20    XP: 0"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
