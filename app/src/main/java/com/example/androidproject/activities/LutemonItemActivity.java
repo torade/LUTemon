@@ -28,6 +28,8 @@ public class LutemonItemActivity {
         private TextView statsText;
         private Button moveButton;
         private Button actionButton;
+        private TextView winsText;
+        private TextView battleCountText;
 
         public LutemonViewHolder(View lutView, LutemonAdapter.OnItemClickListener listener) {
             super(lutView);
@@ -37,6 +39,8 @@ public class LutemonItemActivity {
             statsText = lutView.findViewById(R.id.statsText);
             moveButton = lutView.findViewById(R.id.createLutemonButton);
             actionButton = lutView.findViewById(R.id.actionButton);
+            winsText = lutView.findViewById(R.id.winsText);
+            battleCountText = lutView.findViewById(R.id.battleCountText);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -57,6 +61,25 @@ public class LutemonItemActivity {
         public Button getActionButton() {
             return actionButton;
         }
+        public TextView getWinsText() { return winsText; }
+        public TextView getBattleCountText() { return battleCountText; }
+        public ImageView getLutemonImageView() {
+            return lutemonImage;
+        }
+
+        public TextView getNameTextView() {
+            return nameText;
+        }
+
+        public TextView getColorTextView() {
+            return colorText;
+        }
+
+        public TextView getStatsTextView() {
+            return statsText;
+        }
+
+    }
 
         private void showMoveDialog(Context context, Lutemon lutemon, String currentContainer) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -124,22 +147,6 @@ public class LutemonItemActivity {
 
 
 
-        public ImageView getLutemonImageView() {
-            return lutemonImage;
 
-        }
 
-        public TextView getNameTextView() {
-            return nameText;
-        }
-
-        public TextView getColorTextView() {
-            return colorText;
-        }
-
-        public TextView getStatsTextView() {
-            return statsText;
-        }
-
-    }
 }

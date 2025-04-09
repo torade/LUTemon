@@ -23,6 +23,7 @@ public class Battle
     {
         battleLog.clear();
         battleLog.add("Battle begins: " + A.getName() + " vs " + B.getName());
+        battleLog.add("STATS:" + A.getHealth() + ":" + B.getHealth()); //initial stats
 
         Lutemon attacker = A;
         Lutemon defender = B;
@@ -39,13 +40,17 @@ public class Battle
             int damage = beforeHealth - afterHealth;
 
             battleLog.add(defender.getName() + " takes " + damage + " damage");
+            battleLog.add("STATS:" + (attacker == A ? A.getHealth() : B.getHealth()) + ":" + (defender == A ? A.getHealth() : B.getHealth())); //update stats immediately after each hit)) //update stats immediately after each hit
 
             if (!defender.isAlive()) //when this condition is met, the loop ends (no break necessary)
             {
                 battleLog.add(defender.getName() + " has been defeated");
-                battleLog.add(attacker.getName() + " wins and gains +3xp");
+                int beforeXP = attacker.getExperience();
                 attacker.win();
+                int gainedXP = attacker.getExperience() - beforeXP;
+                battleLog.add(attacker.getName() + " wins and gains +" + gainedXP + " xp");
                 defender.lose();
+                battleLog.add("STATS:" + A.getHealth() + ":" + B.getHealth() + ":" + A.getExperience() + ":" + B.getExperience()); //final stats
             }
             else {
                 //swap roles
@@ -57,9 +62,9 @@ public class Battle
         return battleLog;
     }
 
-    private void logStats(Lutemon A, Lutemon B)
-    {
-        battleLog.add(A.getName() + " (" + A.getColor() + "): " + "\nHP: "+ A.getHealth() + "\n / " + A.getMaxHealth() + "P: " + A.getPower() + "\nDEF: " + A.getDefense() + "\n XP: " + A.getExperience());
-        battleLog.add(B.getName() + " (" + B.getColor() + "): " + "\nHP: "+ B.getHealth() + "\n / " + B.getMaxHealth() + "P: " + B.getPower() + "\nDEF: " + B.getDefense() + "\n XP: " + B.getExperience());
-    }
+//    private void logStats(Lutemon A, Lutemon B)
+//    {
+//        battleLog.add(A.getName() + " (" + A.getColor() + "): " + "\nHP: "+ A.getHealth() + "\n / " + A.getMaxHealth() + "P: " + A.getPower() + "\nDEF: " + A.getDefense() + "\n XP: " + A.getExperience());
+//        battleLog.add(B.getName() + " (" + B.getColor() + "): " + "\nHP: "+ B.getHealth() + "\n / " + B.getMaxHealth() + "P: " + B.getPower() + "\nDEF: " + B.getDefense() + "\n XP: " + B.getExperience());
+//    }
 }

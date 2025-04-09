@@ -25,43 +25,76 @@
                 android:contentDescription="Lutemon image"
                 android:src="@drawable/lutemon_placeholder_sprite" />
 
-            <LinearLayout
+            <!-- Main content container -->
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
                 android:layout_marginStart="16dp">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Wins: 0"
-                    android:textAlignment="textEnd" />
-
-                <TextView
-                    android:id="@+id/nameText"
+                <!-- Left-aligned content (name, color, stats) -->
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lutemon Name"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    android:orientation="vertical"
+                    android:layout_gravity="start">
 
-                <TextView
-                    android:id="@+id/colorText"
+                    <TextView
+                        android:id="@+id/nameText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lutemon Name"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/colorText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Color"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/statsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:text="POW: 5    DEF: 4    HP: 20/20    XP: 0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Right-aligned content (wins, battles) -->
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Color"
-                    android:textSize="14sp"/>
+                    android:orientation="vertical"
+                    android:layout_gravity="end|top">
 
-                <TextView
-                    android:id="@+id/statsText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="POW: 5    DEF: 4    HP: 20/20    XP: 0"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/winsText"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:text="Wins: 0"
+                        android:textAlignment="textStart" />
+
+                    <TextView
+                        android:id="@+id/battleCountText"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:text="Battles: 0"
+                        android:textAlignment="textStart" />
+                    <TextView
+                        android:id="@+id/trainingCountText"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:text="Trainings: 0"
+                        android:textAlignment="textStart" />
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
 
         <LinearLayout

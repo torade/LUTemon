@@ -139,8 +139,20 @@ public class FightActivity extends AppCompatActivity {
         // Clear previous battle log and reset Lutemons to full health if needed
         battleLogView.setText("");
 
+        //save initial xp values before the battle
+        final int originalXpA =a.getExperience();
+        final int originalXpB = b.getExperience();
+
         // Start fight and get log
-        List<String> battleLog = battle.fight(a, b);
+        List<String> battleLog = battle.fight(a, b); // the fight is already done by this point, but we need to update stats after each hit using the log
+
+        final int finalXpA = a.getExperience();
+        final int finalXpB = b.getExperience();
+
+        //reset xp to originals (for visual display during animation)
+        a.setExperience(originalXpA);
+        b.setExperience(originalXpB);
+        updateStats();
 
         // Display log entries one by one with delay
         final int[] logIndex = {0};
@@ -150,46 +162,63 @@ public class FightActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (logIndex[0] < battleLog.size()) {
-                    // Append new log entry
-                    String currentText = battleLogView.getText().toString();
-                    if (!currentText.isEmpty()) {
-                        currentText += "\n";
-                    }
-                    battleLogView.setText(currentText + battleLog.get(logIndex[0]));
 
-                    // Auto-scroll to bottom
-                    final ScrollView scrollView = (ScrollView) battleLogView.getParent();
-                    scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
-
-                    // Apply animations based on the log entry
                     String logEntry = battleLog.get(logIndex[0]);
-                    if (logEntry.contains("attacks")) {
-                        if (logEntry.contains(a.getName())) {
-                            animateAttack(aImage);
-                        } else {
-                            animateAttack(bImage);
+                    //check if stats need to be updated:
+                    if (logEntry.startsWith("STATS:"))
+                    {
+                        //handle stats
+                        String[] stats = logEntry.split(":");
+                        if (stats.length == 3 || stats.length ==5 ) {
+                            a.setHealth(Integer.parseInt(stats[1]));
+                            b.setHealth(Integer.parseInt(stats[2]));
+                            updateStats();
                         }
-                    } else if (logEntry.contains("takes")) {
-                        if (logEntry.contains(a.getName())) {
-                            animateDamage(aImage);
-                        } else {
-                            animateDamage(bImage);
-                        }
-                        // Update stats after damage is taken
-                        updateStats();
-                    } else if (logEntry.contains("defeated")) {
-                        if (logEntry.contains(a.getName())) {
-                            animateDefeat(aImage);
-                        } else {
-                            animateDefeat(bImage);
-                        }
-                        // Update stats after defeat
-                        updateStats();
-                    } else if (logEntry.contains("wins")) {
-                        // Update stats after battle ends
-                        updateStats();
-                    }
+                    }else {
+                            // Append new log entry
+                            String currentText = battleLogView.getText().toString();
+                            if (!currentText.isEmpty()) {
+                                currentText += "\n";
+                            }
+                            battleLogView.setText(currentText + battleLog.get(logIndex[0]));
 
+                            // Auto-scroll to bottom
+                            final ScrollView scrollView = (ScrollView) battleLogView.getParent();
+                            scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+
+                            // Apply animations based on the log entry
+                            // logEntry = battleLog.get(logIndex[0]);
+                            if (logEntry.contains("attacks")) {
+                                String[] parts = logEntry.split(" ");
+                                String attackerName = parts[0];
+                                if (attackerName.equalsIgnoreCase(a.getName()))
+                                    animateAttack(aImage);
+                                else
+                                    animateAttack(bImage);
+                            }
+                            else if (logEntry.contains("takes")) {
+                                if (logEntry.contains(a.getName()))
+                                    animateDamage(aImage);
+                                else
+                                    animateDamage(bImage);
+
+                                // Update stats after damage is taken
+                                updateStats();
+                            } else if (logEntry.contains("defeated")) {
+                                if (logEntry.contains(a.getName())) {
+                                    animateDefeat(aImage);
+                                } else {
+                                    animateDefeat(bImage);
+                                }
+                                // Update stats after defeat
+                                updateStats();
+                            } else if (logEntry.contains("wins") && logEntry.contains("gains +")) {
+                                // Update stats after battle ends
+                                a.setExperience(finalXpA);
+                                b.setExperience(finalXpB);
+                                updateStats();
+                            }
+                        }
                     // Move to next log entry
                     logIndex[0]++;
 

@@ -86,14 +86,13 @@ public abstract class Lutemon // abstract class not meant to be instantiated
 
     /*
     -----------------------------------------------------------------------------------
-    RANDOM NUMBER BETWEEN MAX AND MIN:
+    setters
     -----------------------------------------------------------------------------------
      */
     public static int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
+    public void setExperience(int experience) { this.experience = experience; }
+    public void setHealth(int health) { this.health = health; }
 }

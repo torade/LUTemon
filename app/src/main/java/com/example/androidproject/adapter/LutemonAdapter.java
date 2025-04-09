@@ -95,6 +95,8 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             // Populate text fields
             lutemonHolder.getNameTextView().setText(lutemon.getName());
             lutemonHolder.getColorTextView().setText(lutemon.getColor());
+            lutemonHolder.getWinsText().setText("Wins: " + lutemon.getWinCount());
+            lutemonHolder.getBattleCountText().setText("Battles: " + lutemon.getBattleCount());
 
             String stats = "ATK: " + lutemon.getPower() +
                     "    DEF: " + lutemon.getDefense() +

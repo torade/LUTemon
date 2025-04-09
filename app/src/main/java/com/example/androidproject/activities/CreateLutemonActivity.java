@@ -131,15 +131,15 @@ public class CreateLutemonActivity extends AppCompatActivity {
         switch (type) {
             case "White":
                 imageResId = R.drawable.lutemon_white;
-                stats = "Attack: 5\nDefense: 4\nHealth: 20";
+                stats = "Attack: 7\nDefense: 2\nHealth: 18";
                 break;
             case "Green":
                 imageResId = R.drawable.lutemon_green;
-                stats = "Attack: 6\nDefense: 3\nHealth: 19";
+                stats = "Attack: 10\nDefense: 0\nHealth: 16";
                 break;
             case "Pink":
                 imageResId = R.drawable.lutemon_pink;
-                stats = "Attack: 7\nDefense: 2\nHealth: 18";
+                stats = "Attack: 7\nDefense: 1\nHealth: 18";
                 break;
             case "Orange":
                 imageResId = R.drawable.lutemon_orange;
@@ -147,7 +147,7 @@ public class CreateLutemonActivity extends AppCompatActivity {
                 break;
             case "Black":
                 imageResId = R.drawable.lutemon_black;
-                stats = "Attack: 9\nDefense: 0\nHealth: 16";
+                stats = "Attack: 9\nDefense: 0\nHealth: 18";
                 break;
             default:
                 imageResId = R.drawable.ic_launcher_foreground; // Default image
