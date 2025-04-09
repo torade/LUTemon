@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation ("com.github.AnyChart:AnyChart-Android:1.1.5") //for AnyChart
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("com.google.android.material:material:1.11.0") // For TabLayout
     implementation("androidx.fragment:fragment-ktx:1.6.2") // For fragment-ktx
