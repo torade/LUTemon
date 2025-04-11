@@ -4,23 +4,28 @@ public abstract class Lutemon // abstract class not meant to be instantiated
 {
     protected int id, power, defense, maxHealth, health, experience, trainingCount = 0, battleCount = 0, winCount = 0; // protected fields -> allows inheritance
     private static int ID = 0;
-    protected String color, name;
+    protected String color, name, location;
     /*
     -----------------------------------------------------------------------------------
     constructor:
     -----------------------------------------------------------------------------------
      */
-    public Lutemon(String name, String color, int power, int defense, int maxHealth)
-    {
-        this.id = ID++; // lutemons' ids start from 0
+    public Lutemon(String name, String color, int power, int defense, int maxHealth) { // FOR subclasses
+        this.id = ID++; // Auto-generate ID
         this.name = name;
         this.color = color;
         this.power = power;
         this.defense = defense;
-        this.health = maxHealth; // Start at max health
         this.maxHealth = maxHealth;
+        this.health = maxHealth;
         this.experience = 0;
+        this.location = "home";
+        this.trainingCount = 0;
+        this.battleCount = 0;
+        this.winCount = 0;
     }
+
+
     /*
     -----------------------------------------------------------------------------------
     methods:
@@ -28,14 +33,15 @@ public abstract class Lutemon // abstract class not meant to be instantiated
      */
     public void defend(int attackPower) // method that applies damage to the lutemon
     {
-        int damage = attackPower - defense;
-        if (damage > 0)
-        {
-            if (health - damage >= 0)
-                health -= damage;
-            else health = 0;
+        int damage = (attackPower * 3 / 4) - (defense / 2);
+        if (damage < 1) {
+            damage = 1;
         }
-    }
+
+        if (health - damage >= 0) {
+            health -= damage;
+        } else health = 0;
+        }
     public boolean isAlive() { return health > 0; }
 
     public String train()
@@ -72,14 +78,15 @@ public abstract class Lutemon // abstract class not meant to be instantiated
     getters:
     -----------------------------------------------------------------------------------
      */
-    public int getPower() { return power; }
-    public String getName() { return name; }
     public int getId() { return id; }
+    public String getName() { return name; }
     public String getColor() { return color; }
-    public int getDefense() { return defense; }
     public int getHealth() { return health; }
-    public int getMaxHealth() { return maxHealth; }
     public int getExperience() { return experience; }
+    public String getLocation() { return location; }
+    public int getMaxHealth() { return maxHealth; }
+    public int getPower() { return power; }
+    public int getDefense() { return defense; }
     public int getTrainingCount() { return trainingCount; }
     public int getBattleCount() { return battleCount; }
     public int getWinCount() { return winCount; }
@@ -95,4 +102,10 @@ public abstract class Lutemon // abstract class not meant to be instantiated
 
     public void setExperience(int experience) { this.experience = experience; }
     public void setHealth(int health) { this.health = health; }
+    public void setPower(int power) { this.power = power; }
+    public void setDefense(int defense) { this.defense = defense; }
+    public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
+    public void setTrainingCount(int trainingCount) { this.trainingCount = trainingCount; }
+    public void setBattleCount(int battleCount) { this.battleCount = battleCount; }
+    public void setWinCount(int winCount) { this.winCount = winCount; }
 }

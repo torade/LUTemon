@@ -1,8 +1,9 @@
 package com.example.androidproject.battle;
 
+import com.example.androidproject.model.Lutemon;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.example.androidproject.model.Lutemon;
 
 public class Battle
 {
@@ -21,16 +22,16 @@ public class Battle
      */
     public List<String> fight(Lutemon A, Lutemon B)
     {
+        Lutemon attacker = A;
+        Lutemon defender = B;
+
         battleLog.clear();
         battleLog.add("Battle begins: " + A.getName() + " vs " + B.getName());
         battleLog.add("STATS:" + A.getHealth() + ":" + B.getHealth()); //initial stats
 
-        Lutemon attacker = A;
-        Lutemon defender = B;
-
         while (attacker.isAlive() && defender.isAlive())
         {
-            int attackPower = attacker.getPower();
+            int attackPower = Lutemon.getRandomNumber(2, attacker.getPower()); // Randomize attack power
             battleLog.add(attacker.getName() + " attacks " + defender.getName() + " with power " + attackPower);
 
 

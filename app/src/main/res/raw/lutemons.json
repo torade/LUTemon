@@ -1,0 +1,44 @@
+[
+  {
+    "id": 0,
+    "name": "Cristi",
+    "color": "White",
+    "health": 18,
+    "experience": 0,
+    "location": "home",
+    "maxHealth": 18,
+    "power": 6,
+    "defense": 3,
+    "trainingCount": 0,
+    "battleCount": 0,
+    "winCount": 0
+  },
+  {
+    "id": 1,
+    "name": "Adelina",
+    "color": "Orange",
+    "health": 17,
+    "experience": 0,
+    "location": "home",
+    "maxHealth": 17,
+    "power": 8,
+    "defense": 1,
+    "trainingCount": 0,
+    "battleCount": 0,
+    "winCount": 0
+  },
+  {
+    "id": 2,
+    "name": "Nina",
+    "color": "Pink",
+    "health": 18,
+    "experience": 0,
+    "location": "home",
+    "maxHealth": 18,
+    "power": 7,
+    "defense": 2,
+    "trainingCount": 0,
+    "battleCount": 0,
+    "winCount": 0
+  }
+]

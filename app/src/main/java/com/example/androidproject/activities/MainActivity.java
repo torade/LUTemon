@@ -1,14 +1,12 @@
 package com.example.androidproject.activities;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
+
 import com.example.androidproject.R;
 import com.example.androidproject.adapter.ViewPagerAdapter;
-import com.example.androidproject.containers.Home;
-import com.example.androidproject.model.GreenLutemon;
-import com.example.androidproject.model.WhiteLutemon;
-import com.example.androidproject.model.Lutemon;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

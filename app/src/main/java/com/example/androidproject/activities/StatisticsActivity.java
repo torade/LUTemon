@@ -1,7 +1,9 @@
 package com.example.androidproject.activities;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
@@ -13,6 +15,7 @@ import com.anychart.enums.MarkerType;
 import com.example.androidproject.R;
 import com.example.androidproject.managers.LutemonManager;
 import com.example.androidproject.model.Lutemon;
+
 import java.util.ArrayList;
 import java.util.List;
 

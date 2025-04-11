@@ -12,10 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.androidproject.R;
-import com.example.androidproject.containers.Home;
 import com.example.androidproject.managers.LutemonManager;
-import com.example.androidproject.model.*;
+import com.example.androidproject.model.BlackLutemon;
+import com.example.androidproject.model.GreenLutemon;
+import com.example.androidproject.model.Lutemon;
+import com.example.androidproject.model.OrangeLutemon;
+import com.example.androidproject.model.PinkLutemon;
+import com.example.androidproject.model.WhiteLutemon;
 
 import java.util.List;
 
@@ -118,6 +123,7 @@ public class CreateLutemonActivity extends AppCompatActivity {
 //                }
                 manager.getHome().addLutemon(lutemon); // Add lutemon to Home container
                 lutemon.setExperience(10);               // !! FOR TESTING PURPOSES
+                manager.saveLutemons();
                 finish(); // Go back to Home fragment
             }
         });

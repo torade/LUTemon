@@ -2,6 +2,7 @@ package com.example.androidproject.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -11,14 +12,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.androidproject.R;
 import com.example.androidproject.battle.Battle;
+import com.example.androidproject.containers.BattleArea;
+import com.example.androidproject.containers.Home;
 import com.example.androidproject.managers.LutemonManager;
 import com.example.androidproject.model.Lutemon;
 
@@ -228,6 +227,15 @@ public class FightActivity extends AppCompatActivity {
                     // Battle complete, enable back button
                     backButton.setEnabled(true);
                     Toast.makeText(FightActivity.this, "Battle complete!", Toast.LENGTH_SHORT).show();
+
+                    Home home = lutemonManager.getHome();
+                    BattleArea battleArea = lutemonManager.getBattleArea();
+
+                    lutemonManager.moveLutemon(a.getId(), battleArea, home);
+                    lutemonManager.moveLutemon(b.getId(), battleArea, home);
+
+                    LutemonManager.getInstance(FightActivity.this).saveLutemons();
+                    Log.d("FightActivity", "Battle results saved to JSON");
                 }
             }
         };
