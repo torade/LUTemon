@@ -41,7 +41,7 @@ public class Battle
             int damage = beforeHealth - afterHealth;
 
             battleLog.add(defender.getName() + " takes " + damage + " damage");
-            battleLog.add("STATS:" + A.getHealth() + ":" + B.getHealth()); //update stats immediately after each hit)) //update stats immediately after each hit
+            battleLog.add("STATS:" + A.getHealth() + ":" + B.getHealth()); //update stats immediately after each hit
 
             if (!defender.isAlive()) //when this condition is met, the loop ends (no break necessary)
             {

@@ -40,5 +40,20 @@
     "trainingCount": 0,
     "battleCount": 0,
     "winCount": 0
+  },
+
+  {
+    "id": 3,
+    "name": "Janne",
+    "color": "Black",
+    "health": 5,
+    "experience": 0,
+    "location": "home",
+    "maxHealth": 18,
+    "power": 15,
+    "defense": 2,
+    "trainingCount": 0,
+    "battleCount": 0,
+    "winCount": 0
   }
 ]

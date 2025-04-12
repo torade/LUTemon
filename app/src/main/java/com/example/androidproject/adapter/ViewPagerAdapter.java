@@ -33,15 +33,15 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new HomeAreaFragment();
+                return homeFragment;
             case 1:
-                return new TrainingAreaFragment();
+                return trainingFragment;
             case 2:
-                return new BattleAreaFragment();
+                return battleFragment;
             case 3:
-                return new StatisticsFragment();
+                return statisticsFragment;
             default:
-                return new HomeAreaFragment();
+                return homeFragment;
         }
     }
 
