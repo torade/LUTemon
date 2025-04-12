@@ -33,15 +33,25 @@ public abstract class Lutemon // abstract class not meant to be instantiated
      */
     public void defend(int attackPower) // method that applies damage to the lutemon
     {
-        int damage = (attackPower * 3 / 4) - (defense / 2);
-        if (damage < 1) {
-            damage = 1;
+        int damage = (int) (attackPower - (defense / 2.5));
+
+        // Add a small chance for better defense
+        if (Math.random() < 0.2) { // 20% chance for a better block
+            damage = Math.max(1, damage / 2); // Cut damage in half but ensure at least 1 damage
+        }
+
+        // Ensure minimum damage is at least 12% of attack power
+        int minimumDamage = Math.max(1, attackPower / 8);
+        if (damage < minimumDamage) {
+            damage = minimumDamage;
         }
 
         if (health - damage >= 0) {
             health -= damage;
-        } else health = 0;
+        } else {
+            health = 0;
         }
+    }
     public boolean isAlive() { return health > 0; }
 
     public String train()
