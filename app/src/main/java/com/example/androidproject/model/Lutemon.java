@@ -60,6 +60,7 @@ public abstract class Lutemon // abstract class not meant to be instantiated
         int increasedBy = 0;
         if (experience > 0)
         {
+            this.trainingCount++;
             this.experience--;
             if (choice == 1) {
                 increasedBy = getRandomNumber(3, 7);
@@ -76,7 +77,7 @@ public abstract class Lutemon // abstract class not meant to be instantiated
                 this.maxHealth += increasedBy;
                 return "Max Health increasing by " + increasedBy + "...";
             }
-            this.trainingCount++;
+
         }
         return "No experience to train.";
     }

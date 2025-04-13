@@ -30,6 +30,7 @@ public class LutemonItemActivity {
         private Button actionButton;
         private TextView winsText;
         private TextView battleCountText;
+        private TextView trainingCountText;
 
         public LutemonViewHolder(View lutView, LutemonAdapter.OnItemClickListener listener) {
             super(lutView);
@@ -41,6 +42,7 @@ public class LutemonItemActivity {
             actionButton = lutView.findViewById(R.id.actionButton);
             winsText = lutView.findViewById(R.id.winsText);
             battleCountText = lutView.findViewById(R.id.battleCountText);
+            trainingCountText = lutView.findViewById(R.id.trainingCountText);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,6 +65,8 @@ public class LutemonItemActivity {
         }
         public TextView getWinsText() { return winsText; }
         public TextView getBattleCountText() { return battleCountText; }
+        public TextView getTrainingCountText() { return trainingCountText; }
+
         public ImageView getLutemonImageView() {
             return lutemonImage;
         }

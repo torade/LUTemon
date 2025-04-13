@@ -21,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,20 +58,40 @@ public class LutemonManager
 
     private void loadLutemons() {
         try {
-            // Read the JSON file from resources
-            InputStream is;
-            is = context.getResources().openRawResource(R.raw.lutemons);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            // Try to read from internal storage
+            String jsonString;
+            try {
+                FileInputStream fis = context.openFileInput("lutemons.json");
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader reader = new BufferedReader(isr);
+                StringBuilder jsonBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonBuilder.append(line);
+                }
+                jsonString = jsonBuilder.toString();
+                fis.close();
+            } catch (IOException e) {
+                // If file doesn't exist in internal storage, load default from raw resources
+                Log.d("LutemonManager", "No saved file found, loading default from resources");
+                InputStream is = context.getResources().openRawResource(R.raw.lutemons);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder jsonBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonBuilder.append(line);
+                }
+                jsonString = jsonBuilder.toString();
+                is.close();
 
-            // Read all lines from the file into a StringBuilder
-            StringBuilder jsonBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                jsonBuilder.append(line);
+                // Save the default data to internal storage for future use
+                FileOutputStream fos = context.openFileOutput("lutemons.json", Context.MODE_PRIVATE);
+                fos.write(jsonString.getBytes());
+                fos.close();
             }
 
-            // Parse JSON string into a JSONArray
-            JSONArray jsonArray = new JSONArray(jsonBuilder.toString());
+            // Parse and process the JSON data
+            JSONArray jsonArray = new JSONArray(jsonString);
             int loadedCount = 0;
 
             // Process each Lutemon in the array
@@ -223,6 +244,32 @@ public class LutemonManager
             to.addLutemon(lutemon);
             saveLutemons();
         }
+    }
+
+    public boolean deleteLutemon(int id) {
+        // Try to find and remove the Lutemon from each container
+        Lutemon lutemon = home.getLutemon(id);
+        if (lutemon != null) {
+            home.removeLutemon(id);
+            saveLutemons();
+            return true;
+        }
+
+        lutemon = trainingArea.getLutemon(id);
+        if (lutemon != null) {
+            trainingArea.removeLutemon(id);
+            saveLutemons();
+            return true;
+        }
+
+        lutemon = battleArea.getLutemon(id);
+        if (lutemon != null) {
+            battleArea.removeLutemon(id);
+            saveLutemons();
+            return true;
+        }
+
+        return false; // Lutemon not found in any container
     }
 
     /*

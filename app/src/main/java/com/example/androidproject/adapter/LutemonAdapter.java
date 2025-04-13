@@ -4,13 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -97,6 +99,7 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             lutemonHolder.getColorTextView().setText(lutemon.getColor());
             lutemonHolder.getWinsText().setText("Wins: " + lutemon.getWinCount());
             lutemonHolder.getBattleCountText().setText("Battles: " + lutemon.getBattleCount());
+            lutemonHolder.getTrainingCountText().setText("Trainings: " + lutemon.getTrainingCount());
 
             String stats = "ATK: " + lutemon.getPower() +
                     "    DEF: " + lutemon.getDefense() +
@@ -203,11 +206,15 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         statsText.setText(trainStatUpdated);
 
+        // Save the updated lutemon state
+        LutemonManager.getInstance(context).saveLutemons();
+
         // Auto-close dialog after delay
         new Handler().postDelayed(() -> {
             if (dialog.isShowing()) {
                 dialog.dismiss();
                 Toast.makeText(context, lutemon.getName() + " completed training!", Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged(); // Refresh the entire list to update all stats
             }
         }, 3000);
     }
@@ -220,17 +227,59 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         destinations.add("Home");
         destinations.add("Training Area");
         destinations.add("Battle Area");
-        destinations.remove(currentContainer); // Remove current container
+        destinations.add("Trash");
+        destinations.remove(currentContainer);
 
         String[] options = destinations.toArray(new String[0]);
 
-        builder.setItems(options, (dialog, which) -> {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.dialog_move_item) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                TextView textView = (TextView) super.getView(position, convertView, parent);
+                String item = getItem(position);
+                textView.setText(item);
+                
+                if ("Trash".equals(item)) {
+                    textView.setTextColor(Color.RED);
+                    textView.setTypeface(null, Typeface.BOLD);
+                } else {
+                    textView.setTextColor(Color.BLACK);
+                    textView.setTypeface(null, Typeface.NORMAL);
+                }
+                
+                return textView;
+            }
+        };
+        adapter.addAll(destinations);
+
+        builder.setAdapter(adapter, (dialog, which) -> {
             String destination = options[which];
-            moveLutemon(context, lutemon, currentContainer, destination);
+            if (destination.equals("Trash")) {
+                showDeleteConfirmation(context, lutemon);
+            } else {
+                moveLutemon(context, lutemon, currentContainer, destination);
+            }
         });
 
         builder.setNegativeButton("Cancel", null);
         builder.show();
+    }
+
+    private void showDeleteConfirmation(Context context, Lutemon lutemon) {
+        new AlertDialog.Builder(context)
+            .setTitle("Delete " + lutemon.getName())
+            .setMessage("Are you sure you want to delete this Lutemon? This action cannot be undone.")
+            .setPositiveButton("Delete", (dialog, which) -> {
+                LutemonManager manager = LutemonManager.getInstance(context);
+                if (manager.deleteLutemon(lutemon.getId())) {
+                    lutemons.remove(lutemon);
+                    notifyDataSetChanged();
+                    Toast.makeText(context, lutemon.getName() + " has been deleted", Toast.LENGTH_SHORT).show();
+                }
+            })
+            .setNegativeButton("Cancel", null)
+            .show();
     }
 
     private void moveLutemon(Context context, Lutemon lutemon, String fromContainerName, String toContainerName) {
