@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.LinearLayout;
+
 import androidx.fragment.app.Fragment;
 
 import com.anychart.AnyChart;
@@ -21,12 +22,12 @@ import com.anychart.enums.Align;
 import com.anychart.enums.MarkerType;
 
 import com.example.androidproject.R;
-import com.example.androidproject.activities.StatisticsActivity;
 import com.example.androidproject.managers.LutemonManager;
 import com.example.androidproject.model.Lutemon;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.util.Log;
 
 public class StatisticsFragment extends Fragment {
@@ -49,9 +50,7 @@ public class StatisticsFragment extends Fragment {
 
         // Create the chart view programmatically
         chartView = new AnyChartView(requireContext());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                900); // Fixed height
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 900); // Fixed height
         chartView.setLayoutParams(params);
         statsContainer.addView(chartView);
 
@@ -64,29 +63,27 @@ public class StatisticsFragment extends Fragment {
             Log.d("StatisticsFragment", "Fragment not ready to draw chart");
             return;
         }
-        
+
         try {
             // Create new chart view each time to avoid stale references
             if (chartView != null) {
                 statsContainer.removeView(chartView);
             }
-            
+
             chartView = new AnyChartView(requireContext());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    900);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 900);
             chartView.setLayoutParams(params);
             statsContainer.addView(chartView, 1);
-            
+
             // Wait for the chart view to be laid out before initializing
             chartView.post(() -> {
                 if (!isAdded() || getActivity() == null) return;
-                
+
                 try {
                     // Get all Lutemons first
                     LutemonManager manager = LutemonManager.getInstance(requireContext());
                     List<Lutemon> lutemons = manager.getHome().getAllLutemons();
-                    
+
                     // Check if we have data
                     if (lutemons.isEmpty()) {
                         statsContainer.removeView(chartView);
@@ -96,7 +93,7 @@ public class StatisticsFragment extends Fragment {
                         statsContainer.addView(emptyView, 1);
                         return;
                     }
-                    
+
                     // Create radar chart (similar to StatisticsActivity implementation)
                     // Replace the radar chart creation code in updateStatistics()
 
@@ -127,10 +124,7 @@ public class StatisticsFragment extends Fragment {
                         series.name(lutemon.getName() + " (" + lutemon.getColor() + ")");
 
                         // Make markers larger for better visibility
-                        series.markers()
-                                .enabled(true)
-                                .type(MarkerType.CIRCLE)
-                                .size(6d);
+                        series.markers().enabled(true).type(MarkerType.CIRCLE).size(6d);
 
                         // Use different colors for different Lutemons with single-parameter version
                         switch (lutemon.getColor()) {
@@ -154,16 +148,9 @@ public class StatisticsFragment extends Fragment {
                         }
                     }
 
-                    radar.legend()
-                            .enabled(true)
-                            .fontSize(12)
-                            .align(Align.CENTER)
-                            .position("bottom")
-                            .itemsLayout("horizontal-expandable")
-                            .padding(10d, 0d, 10d, 0d);
+                    radar.legend().enabled(true).fontSize(12).align(Align.CENTER).position("bottom").itemsLayout("horizontal-expandable").padding(10d, 0d, 10d, 0d);
 
-                    radar.tooltip()
-                            .format("{%seriesName}: {%Value}");
+                    radar.tooltip().format("{%seriesName}: {%Value}");
 
                     // Set the chart to view
                     if (chartView != null && isAdded()) {
@@ -173,13 +160,13 @@ public class StatisticsFragment extends Fragment {
 
                     // Add game statistics below the chart
                     displayGameStatistics(lutemons);
-                    
+
                 } catch (Exception e) {
                     Log.e("StatisticsFragment", "Error creating chart after layout: " + e.getMessage(), e);
                     displayErrorMessage(e.getMessage());
                 }
             });
-            
+
         } catch (Exception e) {
             Log.e("StatisticsFragment", "Error in updateStatistics: " + e.getMessage(), e);
             displayErrorMessage(e.getMessage());
@@ -218,40 +205,40 @@ public class StatisticsFragment extends Fragment {
             }
         }, 1000); // Increased delay for better reliability
     }
-    
+
     /**
      * Displays game statistics below the radar chart
      */
     private void displayGameStatistics(List<Lutemon> lutemons) {
         if (!isAdded() || statsContainer == null || lutemons.isEmpty()) return;
-        
+
         // Remove previous stats view if it exists (find by tag)
         View existingStats = statsContainer.findViewWithTag("game_stats");
         if (existingStats != null) {
             statsContainer.removeView(existingStats);
         }
-        
+
         // Calculate statistics
         Lutemon mostBattles = null;
         Lutemon mostWins = null;
         Lutemon bestWinRate = null;
         int totalBattles = 0;
         int totalWins = 0;
-        
+
         for (Lutemon lutemon : lutemons) {
             totalBattles += lutemon.getBattleCount();
             totalWins += lutemon.getWinCount();
-            
+
             // Most battles
             if (mostBattles == null || lutemon.getBattleCount() > mostBattles.getBattleCount()) {
                 mostBattles = lutemon;
             }
-            
+
             // Most wins
             if (mostWins == null || lutemon.getWinCount() > mostWins.getWinCount()) {
                 mostWins = lutemon;
             }
-            
+
             // Best win rate (must have at least 1 battle)
             if (lutemon.getBattleCount() > 0) {
                 float winRate = (float) lutemon.getWinCount() / lutemon.getBattleCount();
@@ -265,13 +252,13 @@ public class StatisticsFragment extends Fragment {
                 }
             }
         }
-        
+
         // Create stats view
         TextView statsView = new TextView(requireContext());
         statsView.setTag("game_stats");
         statsView.setPadding(16, 32, 16, 16);
         statsView.setTextSize(16);
-        
+
         // Build stats text
         StringBuilder statsBuilder = new StringBuilder();
         statsBuilder.append("<h1>📊 GAME STATISTICS 📊</h1><br>");
@@ -285,43 +272,38 @@ public class StatisticsFragment extends Fragment {
             statsBuilder.append("<b>Most Battles:</b> ").append(mostBattles.getName()) // Only shows up after a battle or if >0.
                     .append(" (").append(mostBattles.getBattleCount()).append(" battles)<br>");
         }
-        
+
         // Most wins
         if (mostWins != null && mostWins.getWinCount() > 0) {
-            statsBuilder.append("<b>Top Winner:</b> ").append(mostWins.getName())
-                    .append(" (").append(mostWins.getWinCount()).append(" wins)<br>");
+            statsBuilder.append("<b>Top Winner:</b> ").append(mostWins.getName()).append(" (").append(mostWins.getWinCount()).append(" wins)<br>");
         }
-        
+
         // Best win rate
         if (bestWinRate != null && bestWinRate.getBattleCount() > 0) {
             float winRate = (float) bestWinRate.getWinCount() / bestWinRate.getBattleCount() * 100;
-            statsBuilder.append("<b>Best Win Rate:</b> ").append(bestWinRate.getName())
-                    .append(" (").append(String.format("%.1f", winRate)).append("%)<br>");
+            statsBuilder.append("<b>Best Win Rate:</b> ").append(bestWinRate.getName()).append(" (").append(String.format("%.1f", winRate)).append("%)<br>");
         }
-        
+
         // Most powerful
         Lutemon mostPowerful = lutemons.stream().max((a, b) -> Integer.compare(a.getPower(), b.getPower())).orElse(null);
         if (mostPowerful != null) {
-            statsBuilder.append("<b>Most Powerful:</b> ").append(mostPowerful.getName())
-                    .append(" (Power: ").append(mostPowerful.getPower()).append(")<br>");
+            statsBuilder.append("<b>Most Powerful:</b> ").append(mostPowerful.getName()).append(" (Power: ").append(mostPowerful.getPower()).append(")<br>");
         }
-        
+
         // Best defense
         Lutemon bestDefense = lutemons.stream().max((a, b) -> Integer.compare(a.getDefense(), b.getDefense())).orElse(null);
         if (bestDefense != null) {
-            statsBuilder.append("<b>Best Defense:</b> ").append(bestDefense.getName())
-                    .append(" (Defense: ").append(bestDefense.getDefense()).append(")<br>");
+            statsBuilder.append("<b>Best Defense:</b> ").append(bestDefense.getName()).append(" (Defense: ").append(bestDefense.getDefense()).append(")<br>");
         }
-        
+
         // Most health
         Lutemon mostHealth = lutemons.stream().max((a, b) -> Integer.compare(a.getMaxHealth(), b.getMaxHealth())).orElse(null);
         if (mostHealth != null) {
-            statsBuilder.append("<b>Highest Health:</b> ").append(mostHealth.getName())
-                    .append(" (HP: ").append(mostHealth.getMaxHealth()).append(")<br>");
+            statsBuilder.append("<b>Highest Health:</b> ").append(mostHealth.getName()).append(" (HP: ").append(mostHealth.getMaxHealth()).append(")<br>");
         }
-        
+
         statsView.setText(Html.fromHtml(statsBuilder.toString(), Html.FROM_HTML_MODE_COMPACT));
-        
+
         // Add to container (at the end, after chart and note)
         statsContainer.addView(statsView);
     }

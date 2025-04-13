@@ -139,7 +139,7 @@ public class FightActivity extends AppCompatActivity {
         battleLogView.setText("");
 
         //save initial xp values before the battle
-        final int originalXpA =a.getExperience();
+        final int originalXpA = a.getExperience();
         final int originalXpB = b.getExperience();
 
         // Start fight and get log
@@ -164,60 +164,57 @@ public class FightActivity extends AppCompatActivity {
 
                     String logEntry = battleLog.get(logIndex[0]);
                     //check if stats need to be updated:
-                    if (logEntry.startsWith("STATS:"))
-                    {
+                    if (logEntry.startsWith("STATS:")) {
                         //handle stats
                         String[] stats = logEntry.split(":");
-                        if (stats.length == 3 || stats.length ==5 ) {
+                        if (stats.length == 3 || stats.length == 5) {
                             a.setHealth(Integer.parseInt(stats[1]));
                             b.setHealth(Integer.parseInt(stats[2]));
                             updateStats();
                         }
-                    }else {
-                            // Append new log entry
-                            String currentText = battleLogView.getText().toString();
-                            if (!currentText.isEmpty()) {
-                                currentText += "\n";
-                            }
-                            battleLogView.setText(currentText + battleLog.get(logIndex[0]));
-
-                            // Auto-scroll to bottom
-                            final ScrollView scrollView = (ScrollView) battleLogView.getParent();
-                            scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
-
-                            // Apply animations based on the log entry
-                            // logEntry = battleLog.get(logIndex[0]);
-                            if (logEntry.contains("attacks")) {
-                                String[] parts = logEntry.split(" ");
-                                String attackerName = parts[0];
-                                if (attackerName.equalsIgnoreCase(a.getName()))
-                                    animateAttack(aImage);
-                                else
-                                    animateAttack(bImage);
-                            }
-                            else if (logEntry.contains("takes")) {
-                                if (logEntry.contains(a.getName()))
-                                    animateDamage(aImage);
-                                else
-                                    animateDamage(bImage);
-
-                                // Update stats after damage is taken
-                                updateStats();
-                            } else if (logEntry.contains("defeated")) {
-                                if (logEntry.contains(a.getName())) {
-                                    animateDefeat(aImage);
-                                } else {
-                                    animateDefeat(bImage);
-                                }
-                                // Update stats after defeat
-                                updateStats();
-                            } else if (logEntry.contains("wins") && logEntry.contains("gains +")) {
-                                // Update stats after battle ends
-                                a.setExperience(finalXpA);
-                                b.setExperience(finalXpB);
-                                updateStats();
-                            }
+                    } else {
+                        // Append new log entry
+                        String currentText = battleLogView.getText().toString();
+                        if (!currentText.isEmpty()) {
+                            currentText += "\n";
                         }
+                        battleLogView.setText(currentText + battleLog.get(logIndex[0]));
+
+                        // Auto-scroll to bottom
+                        final ScrollView scrollView = (ScrollView) battleLogView.getParent();
+                        scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+
+                        // Apply animations based on the log entry
+                        if (logEntry.contains("attacks")) {
+                            String[] parts = logEntry.split(" ");
+                            String attackerName = parts[0];
+                            if (attackerName.equalsIgnoreCase(a.getName()))
+                                animateAttack(aImage);
+                            else
+                                animateAttack(bImage);
+                        } else if (logEntry.contains("takes")) {
+                            if (logEntry.contains(a.getName()))
+                                animateDamage(aImage);
+                            else
+                                animateDamage(bImage);
+
+                            // Update stats after damage is taken
+                            updateStats();
+                        } else if (logEntry.contains("defeated")) {
+                            if (logEntry.contains(a.getName())) {
+                                animateDefeat(aImage);
+                            } else {
+                                animateDefeat(bImage);
+                            }
+                            // Update stats after defeat
+                            updateStats();
+                        } else if (logEntry.contains("wins") && logEntry.contains("gains +")) {
+                            // Update stats after battle ends
+                            a.setExperience(finalXpA);
+                            b.setExperience(finalXpB);
+                            updateStats();
+                        }
+                    }
                     // Move to next log entry
                     logIndex[0]++;
 
@@ -244,7 +241,11 @@ public class FightActivity extends AppCompatActivity {
         handler.post(battleSequence);
     }
 
-    // Animation methods
+    /*
+    -----------------------------------------------------------------------------------
+    animation methods:
+    -----------------------------------------------------------------------------------
+     */
     private void animateAttack(ImageView attackerImage) {
         Animation pulse = AnimationUtils.loadAnimation(this, R.anim.pulse_animation);
         attackerImage.startAnimation(pulse);
@@ -260,20 +261,3 @@ public class FightActivity extends AppCompatActivity {
         defeatedImage.startAnimation(fadeOut);
     }
 }
-
-
-//        //display log
-//        StringBuilder logText = new StringBuilder();
-//        for (String entry: battleLog)
-//            logText.append(entry).append("\n");
-//        battleLogView.setText(logText.toString());
-//
-//        //update stats after fight
-//        updateStats();
-//
-//        //enable backButton
-//        backButton.setEnabled(true);
-
-
-//    }
-//}

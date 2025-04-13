@@ -68,7 +68,6 @@ public class BattleAreaFragment extends Fragment {
 
             LutemonAdapter.OnItemClickListener listener = position -> {
                 Lutemon lutemon = lutemons.get(position);
-                // BATTLE LOGIC HERE
             };
 
             if (recyclerView.getAdapter() == null) {

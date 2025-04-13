@@ -72,18 +72,14 @@ public class CreateLutemonActivity extends AppCompatActivity {
         });
 
 
-
         createButton.setOnClickListener(v -> {
             String name = nameInput.getText().toString().trim();
-            if(name.isEmpty() || name.length() > 15 || name.equals("null")) {
+            if (name.isEmpty() || name.length() > 15 || name.equals("null")) {
                 Toast.makeText(this, "Invalid lutemon name", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             LutemonManager manager = LutemonManager.getInstance(this);
-//            if (manager.getHome() == null) {
-//                manager.initializeContainers();
-//            }
 
             // Check if name already exists
             List<Lutemon> existingLutemons = manager.getHome().getAllLutemons();
@@ -118,9 +114,6 @@ public class CreateLutemonActivity extends AppCompatActivity {
             }
 
             if (lutemon != null) {
-//                if (manager.getHome() == null) {
-//                    manager.initializeContainers(); // THIS IS WHY IT'S WORKING. Home needs to be initialized.
-//                }
                 manager.getHome().addLutemon(lutemon); // Add lutemon to Home container
                 lutemon.setExperience(10);               // !! FOR TESTING PURPOSES
                 manager.saveLutemons();

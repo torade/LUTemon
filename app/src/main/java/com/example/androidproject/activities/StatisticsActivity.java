@@ -30,6 +30,11 @@ public class StatisticsActivity extends AppCompatActivity {
         setupRadarChart(radarChart);
     }
 
+    /**
+     * Sets up the radar chart for displaying lutemon battle statistics.
+     *
+     * @param chartView AnyChartView
+     */
     private void setupRadarChart(AnyChartView chartView) {
         Radar radar = AnyChart.radar();
         radar.title("Lutemon Battle Statistics");
@@ -65,9 +70,12 @@ public class StatisticsActivity extends AppCompatActivity {
         chartView.setChart(radar);
     }
 
+    /**
+     * Custom data entry class for the radar chart.
+     */
     public static class CustomDataEntry extends ValueDataEntry {
         public CustomDataEntry(String name, Integer power, Integer defense,
-                        Integer maxHealth, Integer wins, Integer battles) {
+                               Integer maxHealth, Integer wins, Integer battles) {
             super(name, power);
             setValue("defense", defense);
             setValue("maxHealth", maxHealth);

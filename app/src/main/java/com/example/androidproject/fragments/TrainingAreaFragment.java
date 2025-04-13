@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ public class TrainingAreaFragment extends Fragment {
     private Context context;
     private RecyclerView recyclerView;
 
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -38,10 +40,8 @@ public class TrainingAreaFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         recyclerView = view.findViewById(R.id.recyclerViewLutemons);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
         updateLutemons();
     }
 
@@ -66,7 +66,6 @@ public class TrainingAreaFragment extends Fragment {
 
             LutemonAdapter.OnItemClickListener listener = position -> {
                 Lutemon lutemon = lutemons.get(position);
-                // TRAIN LUTEMONS HERE
             };
             if (recyclerView.getAdapter() == null) {
                 recyclerView.setAdapter(new LutemonAdapter(lutemons, context, listener, "Training Area"));

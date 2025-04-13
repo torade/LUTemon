@@ -10,14 +10,12 @@ import com.example.androidproject.fragments.HomeAreaFragment;
 import com.example.androidproject.fragments.StatisticsFragment;
 import com.example.androidproject.fragments.TrainingAreaFragment;
 
-import java.util.ArrayList;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
     private HomeAreaFragment homeFragment;
     private TrainingAreaFragment trainingFragment;
     private BattleAreaFragment battleFragment;
     private StatisticsFragment statisticsFragment;
-    private final ArrayList<Fragment> fragments = new ArrayList<>();
 
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -54,6 +52,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public long getItemId(int position) {
         return position;
     }
+
     @Override
     public boolean containsItem(long itemId) {
         return itemId >= 0 && itemId < getItemCount();

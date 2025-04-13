@@ -75,7 +75,6 @@ public class HomeAreaFragment extends Fragment {
     }
 
 
-
     private void updateLutemons() {
         List<Lutemon> lutemons;
         if (recyclerView == null) {
@@ -90,7 +89,8 @@ public class HomeAreaFragment extends Fragment {
             return;
         }
         if (recyclerView.getAdapter() == null) {
-            recyclerView.setAdapter(new LutemonAdapter(lutemons, getContext(), position -> {}, "Home"));
+            recyclerView.setAdapter(new LutemonAdapter(lutemons, getContext(), position -> {
+            }, "Home"));
         } else {
             ((LutemonAdapter) recyclerView.getAdapter()).updateLutemons(lutemons);
             recyclerView.getAdapter().notifyDataSetChanged();

@@ -46,6 +46,11 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Lutemon secondSelectedLutemon = null;
     private String trainStatUpdated = "";
 
+    /*
+    -----------------------------------------------------------------------------------
+    constructor:
+    -----------------------------------------------------------------------------------
+     */
     public LutemonAdapter(List<Lutemon> lutemons, Context context, OnItemClickListener listener, String currentContainer) {
         this.lutemons = lutemons;
         this.context = context;
@@ -53,6 +58,11 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.currentContainer = currentContainer;
     }
 
+    /*
+    -----------------------------------------------------------------------------------
+    methods:
+    -----------------------------------------------------------------------------------
+     */
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,6 +70,11 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return new LutemonItemActivity.LutemonViewHolder(view, listener);
     }
 
+    /**
+     * Updates the list of lutemons and notifies the adapter that the data has changed.
+     *
+     * @param newLutemons List of updated lutemons
+     */
     @SuppressLint("NotifyDataSetChanged")
     public void updateLutemons(List<Lutemon> newLutemons) {
         this.lutemons = newLutemons;
@@ -101,10 +116,7 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             lutemonHolder.getBattleCountText().setText("Battles: " + lutemon.getBattleCount());
             lutemonHolder.getTrainingCountText().setText("Trainings: " + lutemon.getTrainingCount());
 
-            String stats = "ATK: " + lutemon.getPower() +
-                    "    DEF: " + lutemon.getDefense() +
-                    "    HP: " + lutemon.getHealth() + "/" + lutemon.getMaxHealth() +
-                    "    XP: " + lutemon.getExperience();
+            String stats = "ATK: " + lutemon.getPower() + "    DEF: " + lutemon.getDefense() + "    HP: " + lutemon.getHealth() + "/" + lutemon.getMaxHealth() + "    XP: " + lutemon.getExperience();
             lutemonHolder.getStatsTextView().setText(stats);
 
             // Move button
@@ -239,7 +251,7 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 TextView textView = (TextView) super.getView(position, convertView, parent);
                 String item = getItem(position);
                 textView.setText(item);
-                
+
                 if ("Trash".equals(item)) {
                     textView.setTextColor(Color.RED);
                     textView.setTypeface(null, Typeface.BOLD);
@@ -247,7 +259,7 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     textView.setTextColor(Color.BLACK);
                     textView.setTypeface(null, Typeface.NORMAL);
                 }
-                
+
                 return textView;
             }
         };
@@ -267,21 +279,24 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void showDeleteConfirmation(Context context, Lutemon lutemon) {
-        new AlertDialog.Builder(context)
-            .setTitle("Delete " + lutemon.getName())
-            .setMessage("Are you sure you want to delete this Lutemon? This action cannot be undone.")
-            .setPositiveButton("Delete", (dialog, which) -> {
-                LutemonManager manager = LutemonManager.getInstance(context);
-                if (manager.deleteLutemon(lutemon.getId())) {
-                    lutemons.remove(lutemon);
-                    notifyDataSetChanged();
-                    Toast.makeText(context, lutemon.getName() + " has been deleted", Toast.LENGTH_SHORT).show();
-                }
-            })
-            .setNegativeButton("Cancel", null)
-            .show();
+        new AlertDialog.Builder(context).setTitle("Delete " + lutemon.getName()).setMessage("This action cannot be undone.").setPositiveButton("Delete", (dialog, which) -> {
+            LutemonManager manager = LutemonManager.getInstance(context);
+            if (manager.deleteLutemon(lutemon.getId())) {
+                lutemons.remove(lutemon);
+                notifyDataSetChanged();
+                Toast.makeText(context, lutemon.getName() + " has been deleted", Toast.LENGTH_SHORT).show();
+            }
+        }).setNegativeButton("Cancel", null).show();
     }
 
+    /**
+     * Moves a lutemon from one container to another.
+     *
+     * @param context           Context
+     * @param lutemon           Lutemon to move
+     * @param fromContainerName Name of the container to move from
+     * @param toContainerName   Name of the container to move to
+     */
     private void moveLutemon(Context context, Lutemon lutemon, String fromContainerName, String toContainerName) {
         LutemonManager manager = LutemonManager.getInstance(context);
 
@@ -297,6 +312,13 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    /**
+     * Gets the container by its name.
+     *
+     * @param manager LutemonManager
+     * @param name    Name of the container
+     * @return Container
+     */
     private Container getContainerByName(LutemonManager manager, String name) {
         switch (name) {
             case "Home":

@@ -1,6 +1,5 @@
 package com.example.androidproject.containers;
 
-import com.example.androidproject.model.Lutemon;
 
 public class TrainingArea extends Container
 {
@@ -18,11 +17,5 @@ public class TrainingArea extends Container
             instance = new TrainingArea();
         return instance;
     }
-    /*
-    -----------------------------------------------------------------------------------
-    methods:
-    -----------------------------------------------------------------------------------
-     */
-    public void trainLutemon(Lutemon lutemon) { lutemon.train(); }
 
 }

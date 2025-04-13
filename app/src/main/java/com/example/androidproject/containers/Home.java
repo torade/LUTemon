@@ -23,7 +23,6 @@ public class Home extends Container
     specific methods:
     -----------------------------------------------------------------------------------
      */
-    public void healLutemon(Lutemon lutemon) { lutemon.resetHealth(); } // heal when returning home, might not be used
     @Override
     public void addLutemon(Lutemon lutemon)
     {

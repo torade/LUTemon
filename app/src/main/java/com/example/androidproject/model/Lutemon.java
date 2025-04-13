@@ -1,8 +1,8 @@
 package com.example.androidproject.model;
 
-public abstract class Lutemon // abstract class not meant to be instantiated
+public abstract class Lutemon // abstract class, not meant to be instantiated
 {
-    protected int id, power, defense, maxHealth, health, experience, trainingCount = 0, battleCount = 0, winCount = 0; // protected fields -> allows inheritance
+    protected int id, power, defense, maxHealth, health, experience, trainingCount, battleCount, winCount; // protected fields -> allows inheritance
     private static int ID = 0;
     protected String color, name, location;
     /*
@@ -11,7 +11,7 @@ public abstract class Lutemon // abstract class not meant to be instantiated
     -----------------------------------------------------------------------------------
      */
     public Lutemon(String name, String color, int power, int defense, int maxHealth) { // FOR subclasses
-        this.id = ID++; // Auto-generate ID
+        this.id = ID++; // Auto-increment ID
         this.name = name;
         this.color = color;
         this.power = power;
@@ -52,27 +52,26 @@ public abstract class Lutemon // abstract class not meant to be instantiated
             health = 0;
         }
     }
-    public boolean isAlive() { return health > 0; }
 
-    public String train()
-    {
+    public boolean isAlive() {
+        return health > 0;
+    }
+
+    public String train() {
         int choice = getRandomNumber(1, 3); // random attribute gets trained
-        int increasedBy = 0;
-        if (experience > 0)
-        {
+        int increasedBy;
+        if (experience > 0) {
             this.trainingCount++;
             this.experience--;
             if (choice == 1) {
                 increasedBy = getRandomNumber(3, 7);
                 this.power += increasedBy;
                 return "Power increasing by " + increasedBy + "...";
-            }
-            else if (choice == 2) {
+            } else if (choice == 2) {
                 increasedBy = getRandomNumber(2, 4);
                 this.defense += increasedBy;
                 return "Defense increasing by " + increasedBy + "...";
-            }
-            else if (choice == 3) {
+            } else if (choice == 3) {
                 increasedBy = getRandomNumber(2, 4);
                 this.maxHealth += increasedBy;
                 return "Max Health increasing by " + increasedBy + "...";
@@ -84,6 +83,7 @@ public abstract class Lutemon // abstract class not meant to be instantiated
     public void win() { experience += getRandomNumber(1, 5); winCount++; battleCount++; }
     public void lose() { battleCount++;}
     public void resetHealth() { health = maxHealth; }
+
     /*
     -----------------------------------------------------------------------------------
     getters:
@@ -94,7 +94,6 @@ public abstract class Lutemon // abstract class not meant to be instantiated
     public String getColor() { return color; }
     public int getHealth() { return health; }
     public int getExperience() { return experience; }
-    public String getLocation() { return location; }
     public int getMaxHealth() { return maxHealth; }
     public int getPower() { return power; }
     public int getDefense() { return defense; }

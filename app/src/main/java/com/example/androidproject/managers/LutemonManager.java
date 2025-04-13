@@ -28,24 +28,24 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class LutemonManager
-{
+public class LutemonManager {
     private static LutemonManager instance;
     private Home home;
     private TrainingArea trainingArea;
     private BattleArea battleArea;
     private Battle battle;
     private Context context;
+
     /*
     -----------------------------------------------------------------------------------
     private constructor (singleton):
     -----------------------------------------------------------------------------------
      */
-    private LutemonManager(Context context)
-    {
+    private LutemonManager(Context context) {
         this.context = context;
         battle = new Battle();
     }
+
     public static LutemonManager getInstance(Context context) {
         if (instance == null) {
             instance = new LutemonManager(context.getApplicationContext());
@@ -55,7 +55,16 @@ public class LutemonManager
         }
         return instance;
     }
+    /*
+    -----------------------------------------------------------------------------------
+    methods:
+    -----------------------------------------------------------------------------------
+     */
 
+    /**
+     * Loads Lutemons from the internal storage.
+     * If the file doesn't exist, it loads from the raw resources.
+     */
     private void loadLutemons() {
         try {
             // Try to read from internal storage
@@ -172,6 +181,9 @@ public class LutemonManager
         }
     }
 
+    /**
+     * Saves Lutemons to the internal storage.
+     */
     public void saveLutemons() {
         try {
             // Create a new JSONArray to hold all Lutemons
@@ -196,6 +208,14 @@ public class LutemonManager
         }
     }
 
+    /**
+     * adds Lutemons to a JSONArray based on their location.
+     *
+     * @param lutemons  list of Lutemons
+     * @param location  location of the Lutemons
+     * @param jsonArray JSONArray to add the Lutemons to
+     * @throws JSONException if there's an error adding to the JSONArray
+     */
     private void addLutemonsToJsonArray(List<Lutemon> lutemons, String location, JSONArray jsonArray) throws JSONException {
         if (lutemons == null) return;
 
@@ -221,31 +241,38 @@ public class LutemonManager
     }
 
     public void initializeContainers() {
-            home = Home.getInstance();
-            Log.d("LutemonManager", "Setting Home container");
+        home = Home.getInstance();
+        Log.d("LutemonManager", "Setting Home container");
 
-            trainingArea = TrainingArea.getInstance();
-            Log.d("LutemonManager", "Created new TrainingArea container");
+        trainingArea = TrainingArea.getInstance();
+        Log.d("LutemonManager", "Created new TrainingArea container");
 
-            battleArea = BattleArea.getInstance();
-            Log.d("LutemonManager", "Created new BattleArea container");
+        battleArea = BattleArea.getInstance();
+        Log.d("LutemonManager", "Created new BattleArea container");
     }
-    /*
-    -----------------------------------------------------------------------------------
-    methods:
-    -----------------------------------------------------------------------------------
+
+    /**
+     * Moves a Lutemon from one container to another.
+     *
+     * @param id    (Lutemon ID)
+     * @param from (current container)
+     * @param to   (destination container)
      */
-    public void moveLutemon(int id, Container from, Container to)
-    {
+    public void moveLutemon(int id, Container from, Container to) {
         Lutemon lutemon = from.getLutemon(id);
-        if (lutemon != null)
-        {
+        if (lutemon != null) {
             from.removeLutemon(id);
             to.addLutemon(lutemon);
             saveLutemons();
         }
     }
 
+    /**
+     * Deletes a Lutemon from one of the containers.
+     *
+     * @param id (Lutemon ID)
+     * @return true if the Lutemon was deleted, false otherwise
+     */
     public boolean deleteLutemon(int id) {
         // Try to find and remove the Lutemon from each container
         Lutemon lutemon = home.getLutemon(id);
@@ -277,9 +304,20 @@ public class LutemonManager
     getters:
     -----------------------------------------------------------------------------------
      */
-    public Home getHome() { return home; }
-    public TrainingArea getTrainingArea() { return trainingArea; }
-    public BattleArea getBattleArea() { return battleArea; }
-    public Battle getBattle() { return battle; }
+    public Home getHome() {
+        return home;
+    }
+
+    public TrainingArea getTrainingArea() {
+        return trainingArea;
+    }
+
+    public BattleArea getBattleArea() {
+        return battleArea;
+    }
+
+    public Battle getBattle() {
+        return battle;
+    }
 
 }

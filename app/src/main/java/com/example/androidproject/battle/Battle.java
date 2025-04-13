@@ -5,8 +5,7 @@ import com.example.androidproject.model.Lutemon;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Battle
-{
+public class Battle {
     private List<String> battleLog;
 
     /*
@@ -14,14 +13,16 @@ public class Battle
     constructor:
     -----------------------------------------------------------------------------------
      */
-    public Battle() { this.battleLog = new ArrayList<>(); }
+    public Battle() {
+        this.battleLog = new ArrayList<>();
+    }
+
     /*
     -----------------------------------------------------------------------------------
     methods:
     -----------------------------------------------------------------------------------
      */
-    public List<String> fight(Lutemon A, Lutemon B)
-    {
+    public List<String> fight(Lutemon A, Lutemon B) {
         Lutemon attacker = A;
         Lutemon defender = B;
 
@@ -29,8 +30,7 @@ public class Battle
         battleLog.add("Battle begins: " + A.getName() + " vs " + B.getName());
         battleLog.add("STATS:" + A.getHealth() + ":" + B.getHealth()); //initial stats
 
-        while (attacker.isAlive() && defender.isAlive())
-        {
+        while (attacker.isAlive() && defender.isAlive()) {
             int attackPower = Lutemon.getRandomNumber(2, attacker.getPower()); // Randomize attack power
             battleLog.add(attacker.getName() + " attacks " + defender.getName() + " with power " + attackPower);
 
@@ -52,8 +52,7 @@ public class Battle
                 battleLog.add(attacker.getName() + " wins and gains +" + gainedXP + " xp");
                 defender.lose();
                 battleLog.add("STATS:" + A.getHealth() + ":" + B.getHealth() + ":" + A.getExperience() + ":" + B.getExperience()); //final stats
-            }
-            else {
+            } else {
                 //swap roles
                 Lutemon aux = attacker;
                 attacker = defender;
@@ -63,9 +62,4 @@ public class Battle
         return battleLog;
     }
 
-//    private void logStats(Lutemon A, Lutemon B)
-//    {
-//        battleLog.add(A.getName() + " (" + A.getColor() + "): " + "\nHP: "+ A.getHealth() + "\n / " + A.getMaxHealth() + "P: " + A.getPower() + "\nDEF: " + A.getDefense() + "\n XP: " + A.getExperience());
-//        battleLog.add(B.getName() + " (" + B.getColor() + "): " + "\nHP: "+ B.getHealth() + "\n / " + B.getMaxHealth() + "P: " + B.getPower() + "\nDEF: " + B.getDefense() + "\n XP: " + B.getExperience());
-//    }
 }
