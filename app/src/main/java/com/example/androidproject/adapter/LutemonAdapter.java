@@ -116,7 +116,7 @@ public class LutemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             lutemonHolder.getBattleCountText().setText("Battles: " + lutemon.getBattleCount());
             lutemonHolder.getTrainingCountText().setText("Trainings: " + lutemon.getTrainingCount());
 
-            String stats = "ATK: " + lutemon.getPower() + "    DEF: " + lutemon.getDefense() + "    HP: " + lutemon.getHealth() + "/" + lutemon.getMaxHealth() + "    XP: " + lutemon.getExperience();
+            String stats = "POW: " + lutemon.getPower() + "    DEF: " + lutemon.getDefense() + "    HP: " + lutemon.getHealth() + "/" + lutemon.getMaxHealth() + "    XP: " + lutemon.getExperience();
             lutemonHolder.getStatsTextView().setText(stats);
 
             // Move button
