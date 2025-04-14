@@ -58,7 +58,7 @@ public abstract class Lutemon // abstract class, not meant to be instantiated
     }
 
     public String train() {
-        int choice = getRandomNumber(1, 3); // random attribute gets trained
+        int choice = getRandomNumber(1, 4); // random attribute gets trained
         int increasedBy;
         if (experience > 0) {
             this.trainingCount++;
@@ -74,6 +74,7 @@ public abstract class Lutemon // abstract class, not meant to be instantiated
             } else if (choice == 3) {
                 increasedBy = getRandomNumber(2, 4);
                 this.maxHealth += increasedBy;
+                this.health += increasedBy;
                 return "Max Health increasing by " + increasedBy + "...";
             }
 
