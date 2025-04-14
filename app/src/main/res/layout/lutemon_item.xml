@@ -29,70 +29,81 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="16dp">
+                android:layout_marginStart="16dp"
+                android:layout_weight="1">
 
                 <!-- Left-aligned content (name, color, stats) -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="start">
+                    android:layout_gravity="start"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/nameText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
                         android:text="Lutemon Name"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/colorText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
                         android:text="Color"
-                        android:textSize="14sp"/>
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/statsText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textStyle="bold"
-                        android:text="POW: 5    DEF: 4    HP: 20/20    XP: 0"
-                        android:textSize="14sp" />
+                        android:fontFamily="monospace"
+                        android:text="POW:5 DEF:4 HP:20/20 XP:0"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <!-- Right-aligned content (wins, battles) -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="end|top">
+                    android:layout_gravity="end|top"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/winsText"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp"
-                        android:text="Wins: 0"
-                        android:textAlignment="textStart" />
+                        android:fontFamily="monospace"
+                        android:text="Wins:0"
+                        android:textAlignment="textStart"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/battleCountText"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp"
-                        android:text="Battles: 0"
-                        android:textAlignment="textStart" />
+                        android:fontFamily="monospace"
+                        android:text="Battles:0"
+                        android:textAlignment="textStart"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/trainingCountText"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp"
-                        android:text="Trainings: 0"
-                        android:textAlignment="textStart" />
+                        android:fontFamily="monospace"
+                        android:text="Trainings:0"
+                        android:textAlignment="textStart"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
@@ -100,25 +111,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/createLutemonButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:layout_weight="1"
                 android:text="Move"
-                android:layout_marginEnd="4dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                android:textColor="#ED174D "
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/actionButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:layout_weight="1"
+                android:backgroundTint="#23B900 "
+                android:fontFamily="monospace"
                 android:text="Action"
-                android:layout_marginStart="4dp"/>
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

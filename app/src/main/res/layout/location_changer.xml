@@ -8,10 +8,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="monospace"
         android:text="Move Lutemon to:"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <RadioGroup
         android:id="@+id/destinationGroup"
@@ -23,22 +24,28 @@
             android:id="@+id/homeRadio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:padding="8dp"
             android:text="Home"
-            android:padding="8dp"/>
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/trainingRadio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:padding="8dp"
             android:text="Training Area"
-            android:padding="8dp"/>
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/battleRadio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:padding="8dp"
             android:text="Battle Arena"
-            android:padding="8dp"/>
+            android:textSize="16sp" />
     </RadioGroup>
 
     <LinearLayout
@@ -49,19 +56,27 @@
 
         <Button
             android:id="@+id/cancelButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:fontFamily="monospace"
             android:text="Cancel"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_marginEnd="8dp"/>
+            android:textColor="#ED174D"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/createLutemonButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
+            android:backgroundTint="#23B900"
+            android:fontFamily="monospace"
             android:text="Move"
-            android:layout_marginStart="8dp"/>
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

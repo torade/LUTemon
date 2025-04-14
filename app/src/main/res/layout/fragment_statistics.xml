@@ -15,11 +15,12 @@
             android:id="@+id/statsHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="monospace"
+            android:gravity="center"
             android:text="Lutemon Statistics"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="16dp" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 </ScrollView>
